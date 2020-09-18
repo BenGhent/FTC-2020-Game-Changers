@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
-import android.util.Log;
+//import android.util.Log;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
@@ -44,7 +44,7 @@ public class AutoTransitioner extends Thread {
                 Thread.sleep(50); //Sleep 50 seconds to minimize performance impact to the rest of your program
             }
         } catch (InterruptedException ex) {
-            Log.e(FtcRobotControllerActivity.TAG, "AutoTransitioner shutdown, thread interrupted");
+            //Log.e(FtcRobotControllerActivity.TAG, "AutoTransitioner shutdown, thread interrupted");
         }
     }
 
