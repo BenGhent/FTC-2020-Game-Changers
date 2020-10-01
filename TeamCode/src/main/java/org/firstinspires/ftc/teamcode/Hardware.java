@@ -61,10 +61,11 @@ public class Hardware {
   public DcMotor fireRotate;   // Rotate platform for Firing
   public DcMotor loadRotate;   // Rotate platform for Loading
 
-  public DcMotor fireLauncher; // Firing spin wheel motor
+  public DcMotor LauncherLeft; // Firing spin wheel motor
+  public DcMotor LauncherRight;
   public DcMotor loadLoader;   // Loading spin wheel motor
 
-  public Servo LanchPist;      // launching piston for firing mechanism
+  public Servo LaunchPist;      // launching piston for firing mechanism
 
   public DistanceSensor Dist;  // Distance sensor to detect distance to the goal
 
@@ -126,10 +127,24 @@ public class Hardware {
    backLeft = hwMap.dcMotor.get("BLM");
    backRight = hwMap.dcMotor.get("BRM");
 
+   LauncherLeft = hwMap.dcMotor.get("LL");
+   LauncherRight = hwMap.dcMotor.get("LR");
+
    Dist = hwMap.get(DistanceSensor.class, "FDist");
-   
+
+   LauncherRight.setDirection(DcMotorSimple.Direction.REVERSE);
+
    frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
    backRight.setDirection(DcMotorSimple.Direction.REVERSE);
+
+   /*
+   *
+   * Servos
+   *
+   * */
+
+   LaunchPist = hwMap.servo.get("Pist");
+
   }
 
 
@@ -147,7 +162,8 @@ public class Hardware {
 
   public void setDriveMotorMode(DcMotor.RunMode mode) {
    switch (mode) {
-    case RUN_USING_ENCODER:
+    case RUN_USING_ENCODER:            LauncherLeft.setPower(speed);
+        LauncherRight.setPower(speed);
      if (frontLeft.getMode() == DcMotor.RunMode.RUN_USING_ENCODER)
       break;
      frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -464,6 +480,9 @@ public class Hardware {
             telemetry.addData("At deg: ", curDeg);
             telemetry.addData("Amount Left: ", deg - curDeg);
             telemetry.update();
+
+
+
         } while (
             true
         );
@@ -472,6 +491,8 @@ public class Hardware {
     public void fire(){// Firing sequence for launching rings
         //use equation to find the angle that the firing mechanism must rotate to
         //spin up launch motors
+        LauncherLeft.setPower(0.6);
+        LauncherRight.setPower(0.6);
         //use mathe to move into correct angle
         //rotate servo to fire
         //rotate back
