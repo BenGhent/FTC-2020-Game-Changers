@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.util.Range;
 
 @Autonomous(name="BasicAuto_Linear", group="Linear Opmode")
 //@Disabled
-public class BasicAuto_Linear extends LinearOpMode {
+public class RedBlue_Basic_Auto extends LinearOpMode {
 
     Hardware r = new Hardware();
 
