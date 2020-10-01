@@ -32,10 +32,12 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcontroller.external.samples.SensorREV2mDistance;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Hardware {
@@ -51,16 +53,20 @@ public class Hardware {
     *
     * */
 
-  public DcMotor frontLeft;
-  public DcMotor backLeft;
-  public DcMotor frontRight;
-  public DcMotor backRight;
+  public DcMotor frontLeft;    // Front Left drive motor
+  public DcMotor backLeft;     // Back Left drive motor
+  public DcMotor frontRight;   // Front Right drive motor
+  public DcMotor backRight;    // Back Right drive motor
 
-  public DcMotor leftIntake;
-  public DcMotor rightIntake;
+  public DcMotor fireRotate;   // Rotate platform for Firing
+  public DcMotor loadRotate;   // Rotate platform for Loading
 
-  public DcMotor leftLift;
-  public DcMotor rightLift;
+  public DcMotor fireLauncher; // Firing spin wheel motor
+  public DcMotor loadLoader;   // Loading spin wheel motor
+
+  public Servo LanchPist;      // launching piston for firing mechanism
+
+  public DistanceSensor Dist;
 
   Telemetry telemetry;
   HardwareMap hwMap;
@@ -69,8 +75,12 @@ public class Hardware {
 
   public static final int ticksPerInch=56;
 
+  public static final int ticksPerDeg=0; //the number of ticks it takes for the axle of the motor to rotate 90 deg
+
   public static final int encoderSafeZone=50;/*a motor must be within this many ticks of its
    target to be considered "on target"*/
+
+  public static final int minRotDist = 0;
 
 
   public void initRobot(HardwareMap spareMap, Telemetry tempTelemetry){
@@ -86,13 +96,35 @@ public class Hardware {
   * To set the direction of DC motor, use %var name%.setDirection(DcMotorSimple.Direction.REVERSE);
   *                                                                                       FORWARDS
   *
+  * L = Left
+  * R = Right
+  * F = Front
+  * B = Back
+  * M = Motor
+  *
+  * I = intake
+  * Lau = Launcher
+  *
+  *
+  *  ___        _____
+  * |   |       |   |
+  * |FLM|       |FRM|
+  * |   ‾‾‾‾‾‾‾‾    |
+  * |   ________    |
+  * |BLM|       |BRM|
+  * |   |       |   |
+  * ‾‾‾‾‾       ‾‾‾‾‾
+  *
+  *
   * To map servo, use %var name% = hwMap.servo.get("%name of servo%");
   *
   * */
-   frontLeft = hwMap.dcMotor.get("front left wheel");
-   frontRight = hwMap.dcMotor.get("front right wheel");
-   backLeft = hwMap.dcMotor.get("back left wheel");
-   backRight = hwMap.dcMotor.get("back right wheel");
+   frontLeft = hwMap.dcMotor.get("FLM");
+   frontRight = hwMap.dcMotor.get("FRM");
+   backLeft = hwMap.dcMotor.get("BLM");
+   backRight = hwMap.dcMotor.get("BRM");
+
+   Dist = hwMap.get(DistanceSensor.class, "FDist");
 
    frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
    backRight.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -417,11 +449,32 @@ public class Hardware {
   }
 /*=======================================
  *
- * ===========End do not edit============
+ *============End do not edit============
  *
- * =======================================*/
+ *=======================================*/
 
   //custom code for specific challenge
+
+    public void rotate(int speed, int deg){
+        int curDeg = 0;
+        do {
+            telemetry.addData("Deg set: ", deg);
+            telemetry.addData("At deg: ", curDeg);
+            telemetry.addData("Amount Left: ", deg - curDeg);
+            telemetry.update();
+        } while (
+            true
+        );
+    }
+
+    public void fire(){// Firing sequence for launching rings
+        //use equation to find the angle that the firing mechanism must rotate to
+    }
+
+    int getDist(){// Get distance to the wall using distance sensor
+
+        return 0;
+    }
 
  }
 
