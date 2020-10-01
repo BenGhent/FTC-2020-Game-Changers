@@ -61,8 +61,9 @@ public class Hardware {
   public DcMotor fireRotate;   // Rotate platform for Firing
   public DcMotor loadRotate;   // Rotate platform for Loading
 
-  public DcMotor LauncherLeft; // Firing spin wheel motor
-  public DcMotor LauncherRight;
+  public DcMotor LauncherLeft; // Left Firing spin wheel motor
+  public DcMotor LauncherRight;// Right Firing spin wheel motor
+  public DcMotor LaunchAngle;
   public DcMotor loadLoader;   // Loading spin wheel motor
 
   public Servo LaunchPist;      // launching piston for firing mechanism
@@ -130,6 +131,8 @@ public class Hardware {
    LauncherLeft = hwMap.dcMotor.get("LL");
    LauncherRight = hwMap.dcMotor.get("LR");
 
+   LaunchAngle = hwMap.dcMotor.get("LAM");
+
    LaunchPist = hwMap.servo.get("Pist");
 
    Dist = hwMap.get(DistanceSensor.class, "FDist");
@@ -138,6 +141,8 @@ public class Hardware {
 
    frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
    backRight.setDirection(DcMotorSimple.Direction.REVERSE);
+
+   LaunchAngle.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
   }
 
 
@@ -479,10 +484,27 @@ public class Hardware {
 
     public void fire(){// Firing sequence for launching rings
         //use equation to find the angle that the firing mechanism must rotate to
+        lock("Red");// lock onto target using CV
         //spin up launch motors
         LauncherLeft.setPower(0.6);
         LauncherRight.setPower(0.6);
         //use mathe to move into correct angle
+        if(LaunchAngle.getMode() != DcMotor.RunMode.RUN_TO_POSITION) {
+            LaunchAngle.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }
+        LaunchAngle.setTargetPosition(0-LaunchAngle.getCurrentPosition());
+
+        do{
+            if(LaunchAngle.getTargetPosition() < LaunchAngle.getCurrentPosition()){
+                LaunchAngle.setPower(-0.6);
+            }else if(LaunchAngle.getTargetPosition() > LaunchAngle.getCurrentPosition()){
+                LaunchAngle.setPower(0.6);
+            }
+        }while(
+            LaunchAngle.getCurrentPosition() < LaunchAngle.getTargetPosition() - 50 &&
+            LaunchAngle.getCurrentPosition() > LaunchAngle.getTargetPosition() + 50
+        );
+
         //rotate servo to fire
         LaunchPist.setPosition(1);
         //rotate back
@@ -499,13 +521,15 @@ public class Hardware {
         // Use a do while
 
         do{
-            // rotate the chassis -x
+            if(RB == "Red"){
+                //rotate +x
+            }else if(RB == "Blue"){
+                //rotate -x
+            }
         }while(
             // image ! within the range of a specified value
             true
         );
-
-
     }
 
  }
