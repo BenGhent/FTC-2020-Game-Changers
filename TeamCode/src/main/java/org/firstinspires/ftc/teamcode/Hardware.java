@@ -469,6 +469,10 @@ public class Hardware {
 
     public void fire(){// Firing sequence for launching rings
         //use equation to find the angle that the firing mechanism must rotate to
+        //spin up launch motors
+        //use mathe to move into correct angle
+        //rotate servo to fire
+        //rotate back
     }
 
     int getDist(){// Get distance to the wall using distance sensor
