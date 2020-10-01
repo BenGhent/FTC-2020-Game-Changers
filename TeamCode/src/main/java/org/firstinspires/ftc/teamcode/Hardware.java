@@ -58,12 +58,11 @@ public class Hardware {
   public DcMotor frontRight;   // Front Right drive motor
   public DcMotor backRight;    // Back Right drive motor
 
-  public DcMotor fireRotate;   // Rotate platform for Firing
-  public DcMotor loadRotate;   // Rotate platform for Loading
-
   public DcMotor LauncherLeft; // Left Firing spin wheel motor
   public DcMotor LauncherRight;// Right Firing spin wheel motor
-  public DcMotor LaunchAngle;
+  public DcMotor LaunchAngle;  // Motor that drives the angle of the launcher
+
+  public DcMotor loadRotate;   // Motor that drives the angle of the loader
   public DcMotor loadLoader;   // Loading spin wheel motor
 
   public Servo LaunchPist;      // launching piston for firing mechanism
@@ -123,25 +122,33 @@ public class Hardware {
   * To map servo, use %var name% = hwMap.servo.get("%name of servo%");
   *
   * */
+   //Wheels
    frontLeft = hwMap.dcMotor.get("FLM");
    frontRight = hwMap.dcMotor.get("FRM");
    backLeft = hwMap.dcMotor.get("BLM");
    backRight = hwMap.dcMotor.get("BRM");
 
-   LauncherLeft = hwMap.dcMotor.get("LL");
-   LauncherRight = hwMap.dcMotor.get("LR");
-
-   LaunchAngle = hwMap.dcMotor.get("LAM");
-
-   LaunchPist = hwMap.servo.get("Pist");
-
-   Dist = hwMap.get(DistanceSensor.class, "FDist");
-
-   LauncherRight.setDirection(DcMotorSimple.Direction.REVERSE);
-
    frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
    backRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
+   //Fly wheels
+   LauncherLeft = hwMap.dcMotor.get("LLM");
+   LauncherRight = hwMap.dcMotor.get("LRM");
+
+   loadLoader = hwMap.dcMotor.get("LM");
+
+   LauncherRight.setDirection(DcMotorSimple.Direction.REVERSE);
+
+   //Rotators
+   LaunchAngle = hwMap.dcMotor.get("LAM");
+   loadRotate = hwMap.dcMotor.get("LoAM");
+
+   //Pistons
+   LaunchPist = hwMap.servo.get("Pist");
+
+   //Sensors
+   Dist = hwMap.get(DistanceSensor.class, "FDist"); // Distance sensor
+      
    LaunchAngle.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
   }
 
@@ -482,6 +489,8 @@ public class Hardware {
         );
     }
 
+    int angle;
+
     public void fire(){// Firing sequence for launching rings
         //use equation to find the angle that the firing mechanism must rotate to
         lock("Red");// lock onto target using CV
@@ -492,7 +501,10 @@ public class Hardware {
         if(LaunchAngle.getMode() != DcMotor.RunMode.RUN_TO_POSITION) {
             LaunchAngle.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
-        LaunchAngle.setTargetPosition(0-LaunchAngle.getCurrentPosition());
+
+        angle = 0; // Do the mathe here
+
+        LaunchAngle.setTargetPosition(angle-LaunchAngle.getCurrentPosition());
 
         do{
             if(LaunchAngle.getTargetPosition() < LaunchAngle.getCurrentPosition()){
@@ -507,6 +519,8 @@ public class Hardware {
 
         //rotate servo to fire
         LaunchPist.setPosition(1);
+
+        waiter(500);
         //rotate back
         LaunchPist.setPosition(0);
     }
