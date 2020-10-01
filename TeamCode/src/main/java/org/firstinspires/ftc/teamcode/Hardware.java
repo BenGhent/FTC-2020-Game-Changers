@@ -489,8 +489,23 @@ public class Hardware {
         LaunchPist.setPosition(0);
     }
 
-    double getDist(){// Get distance to the wall using distance sensor
+    public double getDist(){// Get distance to the wall using distance sensor
         return Dist.getDistance(DistanceUnit.MM);
+    }
+
+    public void lock(String RB){// RB = which side, Red or Blue
+        // This method will lock onto the target on the wall
+        // This will use the camera and the image to locate where the image is
+        // Use a do while
+
+        do{
+            // rotate the chassis -x
+        }while(
+            // image ! within the range of a specified value
+            true
+        );
+
+
     }
 
  }
