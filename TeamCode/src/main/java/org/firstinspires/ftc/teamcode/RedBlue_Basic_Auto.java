@@ -16,7 +16,7 @@ public class RedBlue_Basic_Auto extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        AutoTransitioner.transitionOnStop(this, "TeleOp_4");
+        AutoTransitioner.transitionOnStop(this, "TeleOp_Basic");
         r.initRobot(hardwareMap, telemetry);
         r.initAutonomous();
 

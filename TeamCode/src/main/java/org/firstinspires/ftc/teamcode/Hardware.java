@@ -29,7 +29,6 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
@@ -39,15 +38,16 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.SensorREV2mDistance;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 public class Hardware {
   //created by team 9161 overload on 1/31/20
 
     /*
     *
-    * To add DC motor, use public DCMotor %var name%;
+    * To add DC motor, use "public DCMotor %var name%;"
     *
-    * To add Servo, use public Servo %var name%;
+    * To add Servo, use "public Servo %var name%;"
     *
     * ====!then refer to initHardware()!====
     *
@@ -67,6 +67,8 @@ public class Hardware {
   public Servo LanchPist;      // launching piston for firing mechanism
 
   public DistanceSensor Dist;  // Distance sensor to detect distance to the goal
+
+  public SensorREV2mDistance di;
 
   Telemetry telemetry;
   HardwareMap hwMap;
@@ -125,7 +127,7 @@ public class Hardware {
    backRight = hwMap.dcMotor.get("BRM");
 
    Dist = hwMap.get(DistanceSensor.class, "FDist");
-
+   
    frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
    backRight.setDirection(DcMotorSimple.Direction.REVERSE);
   }
@@ -475,9 +477,8 @@ public class Hardware {
         //rotate back
     }
 
-    int getDist(){// Get distance to the wall using distance sensor
-
-        return 0;
+    double getDist(){// Get distance to the wall using distance sensor
+        return Dist.getDistance(DistanceUnit.MM);
     }
 
  }
