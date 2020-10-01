@@ -4,9 +4,9 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@TeleOp(name="TeleOp_5", group="Iterative Opmode")
+@TeleOp(name="TeleOp_Basic", group="Iterative Opmode")
 //@Disabled
-public class TeleOp_5 extends OpMode {
+public class TeleOp_Basic extends OpMode {
 
     boolean inReverse=false;//reverse button is b
     boolean bWasPressed=false;
