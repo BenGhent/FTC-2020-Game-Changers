@@ -6,7 +6,7 @@
 We have many different names for our files, Red, Blue are for the different sides. Basic is a basic move to position, Inter is the intermediate step which only fires the canon, Advanced which uses CV, via TensorFlow, to look and know how many rings are anf moves there, and Supreme does all.
   Side | Type | Location | Auto | Example |
   -----|------|----------|----- |---------|
-  Red | Basic | Left | Auto  |   Ex: Red_Advanced_Left_Auto.java |
+  Red | Basic | Left | Auto  |   Red_Advanced_Left_Auto.java |
   Blue | Inter |  Right | |
   | | Advanced | |
   | | Supreme | |
