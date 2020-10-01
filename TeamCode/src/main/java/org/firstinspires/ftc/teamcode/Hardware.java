@@ -66,7 +66,7 @@ public class Hardware {
 
   public Servo LanchPist;      // launching piston for firing mechanism
 
-  public DistanceSensor Dist;
+  public DistanceSensor Dist;  // Distance sensor to detect distance to the goal
 
   Telemetry telemetry;
   HardwareMap hwMap;
