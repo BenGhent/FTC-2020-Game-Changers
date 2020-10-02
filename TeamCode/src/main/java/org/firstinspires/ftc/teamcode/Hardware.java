@@ -148,7 +148,7 @@ public class Hardware {
 
    //Sensors
    Dist = hwMap.get(DistanceSensor.class, "FDist"); // Distance sensor
-      
+
    LaunchAngle.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
   }
 
@@ -502,7 +502,7 @@ public class Hardware {
             LaunchAngle.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
 
-        angle = 0; // Do the mathe here
+        angle = 0; // Do the math here
 
         LaunchAngle.setTargetPosition(angle-LaunchAngle.getCurrentPosition());
 
@@ -534,16 +534,21 @@ public class Hardware {
         // This will use the camera and the image to locate where the image is
         // Use a do while
 
+        setDriveMotorMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         do{
             if(RB == "Red"){
                 //rotate +x
+                setToClockwise(0.6);
             }else if(RB == "Blue"){
                 //rotate -x
+                setToCounterwise(0.6);
             }
         }while(
             // image ! within the range of a specified value
             true
         );
+
     }
 
  }
