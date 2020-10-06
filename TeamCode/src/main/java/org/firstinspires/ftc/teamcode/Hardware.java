@@ -491,7 +491,7 @@ public class Hardware {
 
     int angle;
 
-    public void fire(){// Firing sequence for launching rings
+    public void Angle(){// Firing sequence for launching rings
         //use equation to find the angle that the firing mechanism must rotate to
         lock("Red");// lock onto target using CV
         //spin up launch motors
@@ -503,6 +503,8 @@ public class Hardware {
         }
 
         angle = 0; // Do the math here
+
+        angle = angle * ticksPerDeg;
 
         LaunchAngle.setTargetPosition(angle-LaunchAngle.getCurrentPosition());
 
@@ -517,6 +519,10 @@ public class Hardware {
             LaunchAngle.getCurrentPosition() > LaunchAngle.getTargetPosition() + 50
         );
 
+
+    }
+
+    public void fire(){
         //rotate servo to fire
         LaunchPist.setPosition(1);
 
