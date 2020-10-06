@@ -67,9 +67,7 @@ public class TeleOp_Basic extends OpMode {
             angle=3*Math.PI/2;
 
         double velocity=Math.sqrt(Math.pow(gamepad1.left_stick_x, 2)+Math.pow(gamepad1.left_stick_y, 2));
-        double g2vel=Math.sqrt(Math.pow(gamepad2.right_stick_y,2))+Math.pow(gamepad2.right_stick_x,2);
         double rotation=gamepad1.right_stick_x*-1;
-        double g2rot=gamepad1.right_stick_x*-1;
 
         if(inReverse)//reverse button
             angle+=Math.toRadians(180);
@@ -77,10 +75,14 @@ public class TeleOp_Basic extends OpMode {
         angle+=Math.toRadians(270);
 
         //equations taking the polar coordinates and turning them into motor powers
-        double power1=velocity*Math.cos(angle+(Math.PI/4))-rotation;
-        double power2=velocity*Math.sin(angle+(Math.PI/4))+rotation;
-        double power3=velocity*Math.sin(angle+(Math.PI/4))-rotation;
-        double power4=velocity*Math.cos(angle+(Math.PI/4))+rotation;
+        double vx = velocity * Math.cos(angle + (Math.PI / 4));
+        double vy = velocity * Math.sin(angle + (Math.PI / 4));
+
+        double power1= vx -rotation;
+        double power2= vy +rotation;
+        double power3= vy -rotation;
+        double power4= vx +rotation;
+
         r.frontLeft.setPower(power1 * deflator);
         r.frontRight.setPower(power2 * deflator);
         r.backLeft.setPower(power3 * deflator);
