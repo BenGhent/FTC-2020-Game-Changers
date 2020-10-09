@@ -493,7 +493,7 @@ public class Hardware {
 
     public void Angle(){// Firing sequence for launching rings
         //use equation to find the angle that the firing mechanism must rotate to
-        lock("Red");// lock onto target using CV
+        //lock("Red");// lock onto target using CV
         //spin up launch motors
         LauncherLeft.setPower(0.6);
         LauncherRight.setPower(0.6);
@@ -514,6 +514,10 @@ public class Hardware {
             }else if(LaunchAngle.getTargetPosition() > LaunchAngle.getCurrentPosition()){
                 LaunchAngle.setPower(0.6);
             }
+//            telemetry.addData("Deg set: ", deg);
+//            telemetry.addData("At deg: ", curDeg);
+//            telemetry.addData("Amount Left: ", deg - curDeg);
+//            telemetry.update();
         }while(
             LaunchAngle.getCurrentPosition() < LaunchAngle.getTargetPosition() - 50 &&
             LaunchAngle.getCurrentPosition() > LaunchAngle.getTargetPosition() + 50
