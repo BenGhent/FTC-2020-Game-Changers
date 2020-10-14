@@ -78,7 +78,7 @@ public class Hardware {
 
   public static final int ticksPerInch=56;
 
-  public static final int ticksPerDeg=0; //the number of ticks it takes for the axle of the motor to rotate 90 deg
+  public static final double ticksPerDeg=3.6; //the number of ticks it takes for the axle of the motor to rotate 90 deg
 
   public static final int encoderSafeZone=50;/*a motor must be within this many ticks of its
    target to be considered "on target"*/
@@ -489,7 +489,9 @@ public class Hardware {
         );
     }
 
-    int angle;
+
+
+    double angle;
 
     public void Angle(){// Firing sequence for launching rings
         //use equation to find the angle that the firing mechanism must rotate to
@@ -506,7 +508,7 @@ public class Hardware {
 
         angle = angle * ticksPerDeg;
 
-        LaunchAngle.setTargetPosition(angle-LaunchAngle.getCurrentPosition());
+        LaunchAngle.setTargetPosition((int)angle-LaunchAngle.getCurrentPosition());
 
         do{
             if(LaunchAngle.getTargetPosition() < LaunchAngle.getCurrentPosition()){
@@ -514,10 +516,9 @@ public class Hardware {
             }else if(LaunchAngle.getTargetPosition() > LaunchAngle.getCurrentPosition()){
                 LaunchAngle.setPower(0.6);
             }
-//            telemetry.addData("Deg set: ", deg);
-//            telemetry.addData("At deg: ", curDeg);
-//            telemetry.addData("Amount Left: ", deg - curDeg);
-//            telemetry.update();
+            telemetry.addData("Angle set: ", angle);//in deg
+            telemetry.addData("At angle: ", LaunchAngle.getCurrentPosition());
+            telemetry.update();
         }while(
             LaunchAngle.getCurrentPosition() < LaunchAngle.getTargetPosition() - 50 &&
             LaunchAngle.getCurrentPosition() > LaunchAngle.getTargetPosition() + 50
@@ -536,6 +537,8 @@ public class Hardware {
     }
 
     public double getDist(){// Get distance to the wall using distance sensor
+        telemetry.addData("Dist = ", Dist.getDistance(DistanceUnit.MM));
+        telemetry.update();
         return Dist.getDistance(DistanceUnit.MM);
     }
 
