@@ -131,25 +131,25 @@ public class Hardware {
    frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
    backRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
-   //Fly wheels
-   LauncherLeft = hwMap.dcMotor.get("LLM");
-   LauncherRight = hwMap.dcMotor.get("LRM");
-
-   loadLoader = hwMap.dcMotor.get("LM");
-
-   LauncherRight.setDirection(DcMotorSimple.Direction.REVERSE);
-
-   //Rotators
-   LaunchAngle = hwMap.dcMotor.get("LAM");
-   loadRotate = hwMap.dcMotor.get("LoAM");
-
-   //Pistons
-   LaunchPist = hwMap.servo.get("Pist");
+//   //Fly wheels
+//   LauncherLeft = hwMap.dcMotor.get("LLM");
+//   LauncherRight = hwMap.dcMotor.get("LRM");
+//
+//   loadLoader = hwMap.dcMotor.get("LM");
+//
+//   LauncherRight.setDirection(DcMotorSimple.Direction.REVERSE);
+//
+//   //Rotators
+//   LaunchAngle = hwMap.dcMotor.get("LAM");
+//   loadRotate = hwMap.dcMotor.get("LoAM");
+//
+//   //Pistons
+//   LaunchPist = hwMap.servo.get("Pist");
 
    //Sensors
-   Dist = hwMap.get(DistanceSensor.class, "FDist"); // Distance sensor
+//   Dist = hwMap.get(DistanceSensor.class, "FDist"); // Distance sensor
 
-   LaunchAngle.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//   LaunchAngle.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
   }
 
 

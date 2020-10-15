@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@TeleOp(name="TeleOp_Basic", group="Iterative Opmode")
+@TeleOp(name="TeleOp_Dev", group="Iterative Opmode")
 //@Disabled
 public class TeleOp_Dev extends OpMode {
 
