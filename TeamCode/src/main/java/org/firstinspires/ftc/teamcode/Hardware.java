@@ -78,12 +78,16 @@ public class Hardware {
 
   public static final int ticksPerInch=56;
 
-  public static final double ticksPerDeg=3.6; //the number of ticks it takes for the axle of the motor to rotate 90 deg
+  public static final double ticksPerDeg=3.1; //the number of ticks it takes for the axle of the motor to rotate 1 deg
 
   public static final int encoderSafeZone=50;/*a motor must be within this many ticks of its
    target to be considered "on target"*/
 
-  public static final int minRotDist = 0;
+  public static final int minRotDist=0;
+
+  public static final int GoalHeight=0; //Height of the goal from the ground
+
+  public static final int RobotHeight=0; //Height of the robot from the ground
 
 
   public void initRobot(HardwareMap spareMap, Telemetry tempTelemetry){
@@ -496,6 +500,13 @@ public class Hardware {
     public void Angle(){// Firing sequence for launching rings
         //use equation to find the angle that the firing mechanism must rotate to
         //lock("Red");// lock onto target using CV
+
+        angle = 0; // Do the math here (Math.atan(Math.sqrt(2(gavity)(Hight of goal - height of tool)) / distance to goal / Math.sqrt((2 * Distance to goal)/)
+
+        angle = angle * ticksPerDeg;
+
+        LaunchAngle.setTargetPosition((int)angle-LaunchAngle.getCurrentPosition());
+
         //spin up launch motors
         LauncherLeft.setPower(0.6);
         LauncherRight.setPower(0.6);
@@ -503,12 +514,6 @@ public class Hardware {
         if(LaunchAngle.getMode() != DcMotor.RunMode.RUN_TO_POSITION) {
             LaunchAngle.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
-
-        angle = 0; // Do the math here
-
-        angle = angle * ticksPerDeg;
-
-        LaunchAngle.setTargetPosition((int)angle-LaunchAngle.getCurrentPosition());
 
         do{
             if(LaunchAngle.getTargetPosition() < LaunchAngle.getCurrentPosition()){
