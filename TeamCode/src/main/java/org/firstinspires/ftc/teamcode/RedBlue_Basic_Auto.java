@@ -34,7 +34,9 @@ public class RedBlue_Basic_Auto extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        r.frontLeft.setTargetPosition(1110);
+        //3.1 per deg
+
+        r.frontLeft.setTargetPosition(558);
 
         r.frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
