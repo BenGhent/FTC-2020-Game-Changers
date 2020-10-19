@@ -501,7 +501,13 @@ public class Hardware {
         //use equation to find the angle that the firing mechanism must rotate to
         //lock("Red");// lock onto target using CV
 
-        angle = 0; // Do the math here (Math.atan(Math.sqrt(2(gavity)(Hight of goal - height of tool)) / distance to goal / Math.sqrt((2 * Distance to goal)/)
+        double a = 0;//Math.sqrt(2(9.8)(goalHeight - botHeight)
+
+        double b = 0;//Dist.getDistMM()
+
+        double c = 0;//
+
+        angle = Math.atan((a*b)/c); // Do the math here (Math.atan(Math.sqrt(2(gavity)(Hight of goal - height of tool)) / distance to goal / Math.sqrt((2 * Distance to goal)/)
 
         angle = angle * ticksPerDeg;
 
