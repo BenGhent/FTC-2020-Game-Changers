@@ -78,7 +78,7 @@ public class Hardware {
 
   public static final int ticksPerInch=56;
 
-  public static final double ticksPerDeg=3.1; //the number of ticks it takes for the axle of the motor to rotate 1 deg
+  public static final double ticksPerDeg=1; //the number of ticks it takes for the axle of the motor to rotate 1 deg
 
   public static final int encoderSafeZone=50;/*a motor must be within this many ticks of its
    target to be considered "on target"*/
