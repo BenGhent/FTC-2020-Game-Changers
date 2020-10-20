@@ -23,6 +23,7 @@ public class Auto {
 
     public void line(){
         //This will move to the line
+        //We could just use a color sensor to detect the line and make sure we are behind it
         if(pos == 0){ //hasn't moved
 
         }else if(pos ==1){ //at block one
@@ -36,14 +37,34 @@ public class Auto {
 
     public void launch(){
         //launches the rings into the goal
+        r.Angle();
+        r.fire(3);
     }
 
     public void launch(int pos){
-        //launches the ring to a specified pole shot
+        //launches the ring to a specified power shot
+        r.Angle(true);
+        r.driveRightEncoder(0.6, 10);
+        r.fire();
+        r.Angle(true);
+        r.driveRightEncoder(0.6, 10);
+        r.fire();
+        r.Angle(true);
     }
 
     public void launch(boolean TF){
         //just place the rings in te bottom placement
+        if(pos == 0){ //hasn't moved
+
+        }else if(pos ==1){ //at block one
+
+        }else if(pos == 2){ //at block 2
+
+        }else if(pos == 3){ //at block 3
+
+        }
+
+        //rotate any arm that will put the ring in
     }
 
 }
