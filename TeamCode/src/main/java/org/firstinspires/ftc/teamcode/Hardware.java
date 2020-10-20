@@ -481,21 +481,9 @@ public class Hardware {
 
   //custom code for specific challenge
 
-    public void rotate(int speed, int deg){
-        int curDeg = 0;
-        do {
-            telemetry.addData("Deg set: ", deg);
-            telemetry.addData("At deg: ", curDeg);
-            telemetry.addData("Amount Left: ", deg - curDeg);
-            telemetry.update();
-        } while (
-            true
-        );
-    }
+  //This is for Game Changers
 
-
-
-    double angle;
+    double angle; //Calculate the angle of te launcher
 
     public void Angle(){// Firing sequence for launching rings
         //use equation to find the angle that the firing mechanism must rotate to
@@ -538,6 +526,42 @@ public class Hardware {
 
     }
 
+    public void Angle(boolean TF){
+        double a = 0;//Math.sqrt(2(9.8)(goalHeight - botHeight)
+
+        double b = 0;//Dist.getDistMM()
+
+        double c = 0;//
+
+        angle = Math.atan((a*b)/c); // Do the math here (Math.atan(Math.sqrt(2(gavity)(Hight of goal - height of tool)) / distance to goal / Math.sqrt((2 * Distance to goal)/)
+
+        angle = angle * ticksPerDeg;
+
+        LaunchAngle.setTargetPosition((int)angle-LaunchAngle.getCurrentPosition());
+
+        //spin up launch motors
+        LauncherLeft.setPower(0.6);
+        LauncherRight.setPower(0.6);
+        //use mathe to move into correct angle
+        if(LaunchAngle.getMode() != DcMotor.RunMode.RUN_TO_POSITION) {
+            LaunchAngle.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }
+
+        do{
+            if(LaunchAngle.getTargetPosition() < LaunchAngle.getCurrentPosition()){
+                LaunchAngle.setPower(-0.6);
+            }else if(LaunchAngle.getTargetPosition() > LaunchAngle.getCurrentPosition()){
+                LaunchAngle.setPower(0.6);
+            }
+            telemetry.addData("Angle set: ", angle);//in deg
+            telemetry.addData("At angle: ", LaunchAngle.getCurrentPosition());
+            telemetry.update();
+        }while(
+                LaunchAngle.getCurrentPosition() < LaunchAngle.getTargetPosition() - 50 &&
+                        LaunchAngle.getCurrentPosition() > LaunchAngle.getTargetPosition() + 50
+        );
+    }
+
     public void fire(){
         //rotate servo to fire
         LaunchPist.setPosition(1);
@@ -545,6 +569,16 @@ public class Hardware {
         waiter(500);
         //rotate back
         LaunchPist.setPosition(0);
+    }
+
+    public void fire(int num){
+        for(int i = 0; i<=num; i++){
+            LaunchPist.setPosition(1);
+
+            waiter(500);
+
+            LaunchPist.setPosition(0);
+        }
     }
 
     public double getDist(){// Get distance to the wall using distance sensor
@@ -575,5 +609,8 @@ public class Hardware {
 
     }
 
- }
+    public void lock(){
 
+    }
+
+ }
