@@ -526,7 +526,7 @@ public class Hardware {
 
     }
 
-    public void Angle(boolean TF){
+    public void Angle(int height){//height is the height of the target position from ground
         double a = 0;//Math.sqrt(2(9.8)(goalHeight - botHeight)
 
         double b = 0;//Dist.getDistMM()
