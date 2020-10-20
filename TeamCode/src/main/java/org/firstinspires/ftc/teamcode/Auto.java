@@ -41,15 +41,15 @@ public class Auto {
         r.fire(3);
     }
 
-    public void launch(int pos){
+    public void launch(int pos, int[] num){//position, the number of power shots
         //launches the ring to a specified power shot
-        r.Angle(true);
-        r.driveRightEncoder(0.6, 10);
-        r.fire();
-        r.Angle(true);
-        r.driveRightEncoder(0.6, 10);
-        r.fire();
-        r.Angle(true);
+        for(int i = 0; i<=num.length;i++){
+            if(num[i] != 0){
+                r.Angle();
+                r.fire();
+            }
+            r.driveRightEncoder(0.6, 10);
+        }
     }
 
     public void launch(boolean TF){
