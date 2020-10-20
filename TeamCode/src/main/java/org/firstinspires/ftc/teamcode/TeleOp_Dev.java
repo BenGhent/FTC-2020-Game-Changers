@@ -98,12 +98,12 @@ public class TeleOp_Dev extends OpMode {
             r.Angle();
         }
 
-        if(gamepad2.left_bumper && gamepad2.a){//If both the angle and the firing button is pressed, fire the ring
-            r.fire();
+        if(gamepad1.a){//rotate robot to face the goal
+            r.lock();
         }
 
-        if(gamepad2.a || gamepad1.a && !gamepad2.left_bumper){
-            //rotate the loading platform to the opposite position && start or stop the loading motors
+        if(gamepad2.left_bumper && gamepad2.a){//If both the angle and the firing button is pressed, fire the ring
+            r.fire();
         }
 
     }
