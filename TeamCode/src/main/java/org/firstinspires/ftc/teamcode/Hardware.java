@@ -515,7 +515,7 @@ public class Hardware {
 
     double angle; //Calculate the angle of te launcher
 
-    public int side;
+    public int side; //For the robot to know which side of the map it is dealing with during auto and TeleOP 0 = blue, 1 = red
 
     public void Angle(){// Firing sequence for launching rings
         //use equation to find the angle that the firing mechanism must rotate to
@@ -644,7 +644,7 @@ public class Hardware {
 
     }
 
-    public void lock(int dir){//0 = red, 1 = blue
+    public void lock(int dir){
         if(dir == 0){
 
         }else if(dir ==1){
