@@ -41,477 +41,477 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 public class Hardware {
-  //created by team 9161 overload on 1/31/20
+    //created by team 9161 overload on 1/31/20
 
     /*
-    *
-    * To add DC motor, use "public DCMotor %var name%;"
-    *
-    * To add Servo, use "public Servo %var name%;"
-    *
-    * ====!then refer to initHardware()!====
-    *
-    * */
+     *
+     * To add DC motor, use "public DCMotor %var name%;"
+     *
+     * To add Servo, use "public Servo %var name%;"
+     *
+     * ====!then refer to initHardware()!====
+     *
+     * */
 
-  public DcMotor frontLeft;    // Front Left drive motor
-  public DcMotor backLeft;     // Back Left drive motor
-  public DcMotor frontRight;   // Front Right drive motor
-  public DcMotor backRight;    // Back Right drive motor
+    public DcMotor frontLeft;    // Front Left drive motor
+    public DcMotor backLeft;     // Back Left drive motor
+    public DcMotor frontRight;   // Front Right drive motor
+    public DcMotor backRight;    // Back Right drive motor
 
-  public DcMotor LauncherLeft; // Left Firing spin wheel motor
-  public DcMotor LauncherRight;// Right Firing spin wheel motor
-  public DcMotor LaunchAngle;  // Motor that drives the angle of the launcher
+    public DcMotor LauncherLeft; // Left Firing spin wheel motor
+    public DcMotor LauncherRight;// Right Firing spin wheel motor
+    public DcMotor LaunchAngle;  // Motor that drives the angle of the launcher
 
-  public DcMotor loadRotate;   // Motor that drives the angle of the loader
-  public DcMotor loadLoader;   // Loading spin wheel motor
+    public DcMotor loadRotate;   // Motor that drives the angle of the loader
+    public DcMotor loadLoader;   // Loading spin wheel motor
 
-  public Servo LaunchPist;      // launching piston for firing mechanism
+    public Servo LaunchPist;      // launching piston for firing mechanism
 
-  public DistanceSensor Dist;  // Distance sensor to detect distance to the goal
+    public DistanceSensor Dist;  // Distance sensor to detect distance to the goal
 
-  public SensorREV2mDistance di;
+    public SensorREV2mDistance di;
 
-  Telemetry telemetry;
-  HardwareMap hwMap;
+    Telemetry telemetry;
+    HardwareMap hwMap;
 
-  ElapsedTime timer = new ElapsedTime();
+    ElapsedTime timer = new ElapsedTime();
 
-  public static final int ticksPerInch=56;
+    public static final int ticksPerInch=56;
 
-  public static final double ticksPerDeg=1; //the number of ticks it takes for the axle of the motor to rotate 1 deg
+    public static final double ticksPerDeg=1; //the number of ticks it takes for the axle of the motor to rotate 1 deg
 
-  public static final int encoderSafeZone=50;/*a motor must be within this many ticks of its
+    public static final int encoderSafeZone=50;/*a motor must be within this many ticks of its
    target to be considered "on target"*/
 
-  public static final int minRotDist=0;
+    public static final int minRotDist=0;
 
-  public static final int GoalHeight=0; //Height of the goal from the ground
+    public static final int GoalHeight=0; //Height of the goal from the ground
 
-  public static final int RobotHeight=0; //Height of the robot from the ground
+    public static final int RobotHeight=0; //Height of the robot from the ground
 
 
-  public void initRobot(HardwareMap spareMap, Telemetry tempTelemetry){
-   hwMap = spareMap;
-   telemetry = tempTelemetry;
-   initHardware();
-  }
+    public void initRobot(HardwareMap spareMap, Telemetry tempTelemetry){
+        hwMap = spareMap;
+        telemetry = tempTelemetry;
+        initHardware();
+    }
 
-  public void initHardware() {
-  /*
-  *
-  * To init a DC motor, use %var name% = hwMap.dcMotor.get("%name of motor%");
-  * To set the direction of DC motor, use %var name%.setDirection(DcMotorSimple.Direction.REVERSE);
-  *                                                                                       FORWARDS
-  *
-  * L = Left
-  * R = Right
-  * F = Front
-  * B = Back
-  * M = Motor
-  *
-  * I = intake
-  * Lau = Launcher
-  *
-  *
-  *  ___        _____
-  * |   |       |   |
-  * |FLM|       |FRM|
-  * |   ‾‾‾‾‾‾‾‾    |
-  * |   ________    |
-  * |BLM|       |BRM|
-  * |   |       |   |
-  * ‾‾‾‾‾       ‾‾‾‾‾
-  *
-  *
-  * To map servo, use %var name% = hwMap.servo.get("%name of servo%");
-  *
-  * */
-   //Wheels
-   frontLeft = hwMap.dcMotor.get("FLM");
-   frontRight = hwMap.dcMotor.get("FRM");
-   backLeft = hwMap.dcMotor.get("BLM");
-   backRight = hwMap.dcMotor.get("BRM");
+    public void initHardware() {
+        /*
+         *
+         * To init a DC motor, use %var name% = hwMap.dcMotor.get("%name of motor%");
+         * To set the direction of DC motor, use %var name%.setDirection(DcMotorSimple.Direction.REVERSE);
+         *                                                                                       FORWARDS
+         *
+         * L = Left
+         * R = Right
+         * F = Front
+         * B = Back
+         * M = Motor
+         *
+         * I = intake
+         * Lau = Launcher
+         *
+         *
+         *  ___        _____
+         * |   |       |   |
+         * |FLM|       |FRM|
+         * |   ‾‾‾‾‾‾‾‾    |
+         * |   ________    |
+         * |BLM|       |BRM|
+         * |   |       |   |
+         * ‾‾‾‾‾       ‾‾‾‾‾
+         *
+         *
+         * To map servo, use %var name% = hwMap.servo.get("%name of servo%");
+         *
+         * */
+        //Wheels
+        frontLeft = hwMap.dcMotor.get("FLM");
+        frontRight = hwMap.dcMotor.get("FRM");
+        backLeft = hwMap.dcMotor.get("BLM");
+        backRight = hwMap.dcMotor.get("BRM");
 
-   frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
-   backRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        backRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
-//   //Fly wheels
-//   LauncherLeft = hwMap.dcMotor.get("LLM");
-//   LauncherRight = hwMap.dcMotor.get("LRM");
+//        //Fly wheels
+//        LauncherLeft = hwMap.dcMotor.get("LLM");
+//        LauncherRight = hwMap.dcMotor.get("LRM");
 //
-//   loadLoader = hwMap.dcMotor.get("LM");
+//        loadLoader = hwMap.dcMotor.get("LM");
 //
-//   LauncherRight.setDirection(DcMotorSimple.Direction.REVERSE);
+//        LauncherRight.setDirection(DcMotorSimple.Direction.REVERSE);
 //
-//   //Rotators
-//   LaunchAngle = hwMap.dcMotor.get("LAM");
-//   loadRotate = hwMap.dcMotor.get("LoAM");
+//        //Rotators
+//        LaunchAngle = hwMap.dcMotor.get("LAM");
+//        loadRotate = hwMap.dcMotor.get("LoAM");
 //
-//   //Pistons
-//   LaunchPist = hwMap.servo.get("Pist");
+//        //Pistons
+//        LaunchPist = hwMap.servo.get("Pist");
+//
+//        //Sensors
+//        Dist = hwMap.get(DistanceSensor.class, "FDist"); // Distance sensor
+//
+//        LaunchAngle.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    }
 
-   //Sensors
-//   Dist = hwMap.get(DistanceSensor.class, "FDist"); // Distance sensor
 
-//   LaunchAngle.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-  }
+    // be sure to init all servos in initAutonomous()
+    public void initAutonomous(){
+        setDriveMotorMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        waiter(500);
+    }
 
+    /*=======================================
+     *
+     * =============Do not edit===============
+     *
+     * =======================================*/
 
-  // be sure to init all servos in initAutonomous()
-  public void initAutonomous(){
-   setDriveMotorMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-   waiter(500);
-  }
+    public void setDriveMotorMode(DcMotor.RunMode mode) {
+        switch (mode) {
+            case RUN_USING_ENCODER:
+                if (frontLeft.getMode() == DcMotor.RunMode.RUN_USING_ENCODER)
+                    break;
+                frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                break;
+            case RUN_WITHOUT_ENCODER:
+                if (frontLeft.getMode() == DcMotor.RunMode.RUN_WITHOUT_ENCODER)
+                    break;
+                frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                break;
+            case STOP_AND_RESET_ENCODER:
+                if (frontLeft.getMode() == DcMotor.RunMode.STOP_AND_RESET_ENCODER)
+                    break;
+                frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                break;
+            case RUN_TO_POSITION:
+                if (frontLeft.getMode() == DcMotor.RunMode.RUN_TO_POSITION)
+                    break;
+                frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                break;
+        }
+    }
 
-  /*=======================================
-  *
-  * =============Do not edit===============
-  *
-  * =======================================*/
+    //methods to set the four drive wheels in specific directions
+    public void setMotorEncoderForward(int distance){
+        frontLeft.setTargetPosition(distance);
+        frontRight.setTargetPosition(distance);
+        backLeft.setTargetPosition(distance);
+        backRight.setTargetPosition(distance);
+    }
+    public void setMotorEncoderBackward(int distance) {
+        frontLeft.setTargetPosition(-distance);
+        frontRight.setTargetPosition(-distance);
+        backLeft.setTargetPosition(-distance);
+        backRight.setTargetPosition(-distance);
+    }
+    public void setMotorEncoderLeft(int distance) {
+        frontLeft.setTargetPosition(-distance);
+        frontRight.setTargetPosition(distance);
+        backLeft.setTargetPosition(distance);
+        backRight.setTargetPosition(-distance);
+    }
+    public void setMotorEncoderRight(int distance) {
+        frontLeft.setTargetPosition(distance);
+        frontRight.setTargetPosition(-distance);
+        backLeft.setTargetPosition(-distance);
+        backRight.setTargetPosition(distance);
+    }
+    public void setMotorEncoderClockwise(int distance) {
+        frontLeft.setTargetPosition(distance);
+        frontRight.setTargetPosition(-distance);
+        backLeft.setTargetPosition(distance);
+        backRight.setTargetPosition(-distance);
+    }
+    public void setMotorEncoderCounterwise(int distance) {
+        frontLeft.setTargetPosition(-distance);
+        frontRight.setTargetPosition(distance);
+        backLeft.setTargetPosition(-distance);
+        backRight.setTargetPosition(distance);
+    }
 
-  public void setDriveMotorMode(DcMotor.RunMode mode) {
-   switch (mode) {
-    case RUN_USING_ENCODER:
-     if (frontLeft.getMode() == DcMotor.RunMode.RUN_USING_ENCODER)
-      break;
-     frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-     frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-     backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-     backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-     break;
-    case RUN_WITHOUT_ENCODER:
-     if (frontLeft.getMode() == DcMotor.RunMode.RUN_WITHOUT_ENCODER)
-      break;
-     frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-     frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-     backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-     backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-     break;
-    case STOP_AND_RESET_ENCODER:
-     if (frontLeft.getMode() == DcMotor.RunMode.STOP_AND_RESET_ENCODER)
-      break;
-     frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-     frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-     backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-     backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-     break;
-    case RUN_TO_POSITION:
-     if (frontLeft.getMode() == DcMotor.RunMode.RUN_TO_POSITION)
-      break;
-     frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-     frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-     backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-     backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-     break;
-   }
-  }
+    public void setToForward(double power) {
+        frontLeft.setPower(power);
+        frontRight.setPower(power);
+        backLeft.setPower(power);
+        backRight.setPower(power);
+    }
+    public void setToBackward(double power) {
+        frontLeft.setPower(-1 * power);
+        frontRight.setPower(-1 * power);
+        backLeft.setPower(-1 * power);
+        backRight.setPower(-1 * power);
+    }
+    public void setToCounterwise(double power) {
+        frontLeft.setPower(-1 * power);
+        frontRight.setPower(1 * power);
+        backLeft.setPower(-1 * power);
+        backRight.setPower(1 * power);
+    }
+    public void setToClockwise(double power) {
+        frontLeft.setPower(1 * power);
+        frontRight.setPower(-1 * power);
+        backLeft.setPower(1 * power);
+        backRight.setPower(-1 * power);
+    }
+    public void setToRight(double power) {
+        frontLeft.setPower(1 * power);
+        frontRight.setPower(-1 * power);
+        backLeft.setPower(-1 * power);
+        backRight.setPower(1 * power);
+    }
+    public void setToLeft(double power) {
+        frontLeft.setPower(-1 * power);
+        frontRight.setPower(1 * power);
+        backLeft.setPower(1 * power);
+        backRight.setPower(-1 * power);
+    }
+    public void setToStill() {
+        frontLeft.setPower(0);
+        frontRight.setPower(0);
+        backLeft.setPower(0);
+        backRight.setPower(0);
+    }
 
-  //methods to set the four drive wheels in specific directions
-  public void setMotorEncoderForward(int distance){
-   frontLeft.setTargetPosition(distance);
-   frontRight.setTargetPosition(distance);
-   backLeft.setTargetPosition(distance);
-   backRight.setTargetPosition(distance);
-  }
-  public void setMotorEncoderBackward(int distance) {
-   frontLeft.setTargetPosition(-distance);
-   frontRight.setTargetPosition(-distance);
-   backLeft.setTargetPosition(-distance);
-   backRight.setTargetPosition(-distance);
-  }
-  public void setMotorEncoderLeft(int distance) {
-   frontLeft.setTargetPosition(-distance);
-   frontRight.setTargetPosition(distance);
-   backLeft.setTargetPosition(distance);
-   backRight.setTargetPosition(-distance);
-  }
-  public void setMotorEncoderRight(int distance) {
-   frontLeft.setTargetPosition(distance);
-   frontRight.setTargetPosition(-distance);
-   backLeft.setTargetPosition(-distance);
-   backRight.setTargetPosition(distance);
-  }
-  public void setMotorEncoderClockwise(int distance) {
-   frontLeft.setTargetPosition(distance);
-   frontRight.setTargetPosition(-distance);
-   backLeft.setTargetPosition(distance);
-   backRight.setTargetPosition(-distance);
-  }
-  public void setMotorEncoderCounterwise(int distance) {
-   frontLeft.setTargetPosition(-distance);
-   frontRight.setTargetPosition(distance);
-   backLeft.setTargetPosition(-distance);
-   backRight.setTargetPosition(distance);
-  }
+    public void driveForwardEncoder(double power, int distance) {
 
-  public void setToForward(double power) {
-   frontLeft.setPower(power);
-   frontRight.setPower(power);
-   backLeft.setPower(power);
-   backRight.setPower(power);
-  }
-  public void setToBackward(double power) {
-   frontLeft.setPower(-1 * power);
-   frontRight.setPower(-1 * power);
-   backLeft.setPower(-1 * power);
-   backRight.setPower(-1 * power);
-  }
-  public void setToCounterwise(double power) {
-   frontLeft.setPower(-1 * power);
-   frontRight.setPower(1 * power);
-   backLeft.setPower(-1 * power);
-   backRight.setPower(1 * power);
-  }
-  public void setToClockwise(double power) {
-   frontLeft.setPower(1 * power);
-   frontRight.setPower(-1 * power);
-   backLeft.setPower(1 * power);
-   backRight.setPower(-1 * power);
-  }
-  public void setToRight(double power) {
-   frontLeft.setPower(1 * power);
-   frontRight.setPower(-1 * power);
-   backLeft.setPower(-1 * power);
-   backRight.setPower(1 * power);
-  }
-  public void setToLeft(double power) {
-   frontLeft.setPower(-1 * power);
-   frontRight.setPower(1 * power);
-   backLeft.setPower(1 * power);
-   backRight.setPower(-1 * power);
-  }
-  public void setToStill() {
-   frontLeft.setPower(0);
-   frontRight.setPower(0);
-   backLeft.setPower(0);
-   backRight.setPower(0);
-  }
+        int frontLDist, frontRDist, backLDist, backRDist;
+        setMotorEncoderForward(distance*ticksPerInch+frontLeft.getCurrentPosition());
+        setDriveMotorMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-  public void driveForwardEncoder(double power, int distance) {
+        setToForward(power);
+        do{
+            frontLDist=Math.abs(frontLeft.getTargetPosition()-frontLeft.getCurrentPosition());
+            frontRDist=Math.abs(frontRight.getTargetPosition()-frontRight.getCurrentPosition());
+            backLDist=Math.abs(backLeft.getTargetPosition()-backLeft.getCurrentPosition());
+            backRDist=Math.abs(backRight.getTargetPosition()-backRight.getCurrentPosition());
 
-   int frontLDist, frontRDist, backLDist, backRDist;
-   setMotorEncoderForward(distance*ticksPerInch+frontLeft.getCurrentPosition());
-   setDriveMotorMode(DcMotor.RunMode.RUN_TO_POSITION);
+            telemetry.addData("frontLeft distanceFrom: ", frontLeft.getCurrentPosition());
+            telemetry.addData("frontRight distanceFrom: ",frontRight.getCurrentPosition());
+            telemetry.addData("backLeft distanceFrom: ",backLeft.getCurrentPosition());
+            telemetry.addData("backRight distanceFrom: ",backRight.getCurrentPosition());
+            telemetry.update();
+        }while(
+                frontLDist>encoderSafeZone &&
+                        frontRDist>encoderSafeZone &&
+                        backLDist>encoderSafeZone &&
+                        backRDist>encoderSafeZone
+        );
+        setToStill();
+    }
+    public void driveBackwardEncoder(double power, int distance) {
+        int frontLDist, frontRDist, backLDist, backRDist;
+        setMotorEncoderBackward(distance*ticksPerInch+frontLeft.getCurrentPosition());
+        setDriveMotorMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-   setToForward(power);
-   do{
-    frontLDist=Math.abs(frontLeft.getTargetPosition()-frontLeft.getCurrentPosition());
-    frontRDist=Math.abs(frontRight.getTargetPosition()-frontRight.getCurrentPosition());
-    backLDist=Math.abs(backLeft.getTargetPosition()-backLeft.getCurrentPosition());
-    backRDist=Math.abs(backRight.getTargetPosition()-backRight.getCurrentPosition());
+        setToForward(power);
+        do{
+            frontLDist=Math.abs(frontLeft.getTargetPosition()-frontLeft.getCurrentPosition());
+            frontRDist=Math.abs(frontRight.getTargetPosition()-frontRight.getCurrentPosition());
+            backLDist=Math.abs(backLeft.getTargetPosition()-backLeft.getCurrentPosition());
+            backRDist=Math.abs(backRight.getTargetPosition()-backRight.getCurrentPosition());
 
-    telemetry.addData("frontLeft distanceFrom: ", frontLeft.getCurrentPosition());
-    telemetry.addData("frontRight distanceFrom: ",frontRight.getCurrentPosition());
-    telemetry.addData("backLeft distanceFrom: ",backLeft.getCurrentPosition());
-    telemetry.addData("backRight distanceFrom: ",backRight.getCurrentPosition());
-    telemetry.update();
-   }while(
-           frontLDist>encoderSafeZone &&
-                   frontRDist>encoderSafeZone &&
-                   backLDist>encoderSafeZone &&
-                   backRDist>encoderSafeZone
-   );
-   setToStill();
-  }
-  public void driveBackwardEncoder(double power, int distance) {
-   int frontLDist, frontRDist, backLDist, backRDist;
-   setMotorEncoderBackward(distance*ticksPerInch+frontLeft.getCurrentPosition());
-   setDriveMotorMode(DcMotor.RunMode.RUN_TO_POSITION);
+            telemetry.addData("frontLeft distanceFrom: ",frontLDist);
+            telemetry.addData("frontRight distanceFrom: ",frontRDist);
+            telemetry.addData("backLeft distanceFrom: ",backLDist);
+            telemetry.addData("backRight distanceFrom: ",backRDist);
+            telemetry.update();
+        }while(
+                frontLDist>encoderSafeZone &&
+                        frontRDist>encoderSafeZone &&
+                        backLDist>encoderSafeZone &&
+                        backRDist>encoderSafeZone
+        );
+        setToStill();
+    }
+    public void driveLeftEncoder(double power, int distance) {
 
-   setToForward(power);
-   do{
-    frontLDist=Math.abs(frontLeft.getTargetPosition()-frontLeft.getCurrentPosition());
-    frontRDist=Math.abs(frontRight.getTargetPosition()-frontRight.getCurrentPosition());
-    backLDist=Math.abs(backLeft.getTargetPosition()-backLeft.getCurrentPosition());
-    backRDist=Math.abs(backRight.getTargetPosition()-backRight.getCurrentPosition());
+        int frontLDist, frontRDist, backLDist, backRDist;
+        setMotorEncoderLeft(distance*ticksPerInch+frontLeft.getCurrentPosition());
+        setDriveMotorMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-    telemetry.addData("frontLeft distanceFrom: ",frontLDist);
-    telemetry.addData("frontRight distanceFrom: ",frontRDist);
-    telemetry.addData("backLeft distanceFrom: ",backLDist);
-    telemetry.addData("backRight distanceFrom: ",backRDist);
-    telemetry.update();
-   }while(
-           frontLDist>encoderSafeZone &&
-                   frontRDist>encoderSafeZone &&
-                   backLDist>encoderSafeZone &&
-                   backRDist>encoderSafeZone
-   );
-   setToStill();
-  }
-  public void driveLeftEncoder(double power, int distance) {
+        setToForward(power);
+        do{
+            frontLDist=Math.abs(frontLeft.getTargetPosition()-frontLeft.getCurrentPosition());
+            frontRDist=Math.abs(frontRight.getTargetPosition()-frontRight.getCurrentPosition());
+            backLDist=Math.abs(backLeft.getTargetPosition()-backLeft.getCurrentPosition());
+            backRDist=Math.abs(backRight.getTargetPosition()-backRight.getCurrentPosition());
 
-   int frontLDist, frontRDist, backLDist, backRDist;
-   setMotorEncoderLeft(distance*ticksPerInch+frontLeft.getCurrentPosition());
-   setDriveMotorMode(DcMotor.RunMode.RUN_TO_POSITION);
+            telemetry.addData("frontLeft distanceFrom: ",frontLDist);
+            telemetry.addData("frontRight distanceFrom: ",frontRDist);
+            telemetry.addData("backLeft distanceFrom: ",backLDist);
+            telemetry.addData("backRight distanceFrom: ",backRDist);
+            telemetry.update();
+        }while(
+                frontLDist>encoderSafeZone &&
+                        frontRDist>encoderSafeZone &&
+                        backLDist>encoderSafeZone &&
+                        backRDist>encoderSafeZone
+        );
+        setToStill();
+    }
+    public void driveRightEncoder(double power, int distance) {
+        int frontLDist, frontRDist, backLDist, backRDist;
+        setMotorEncoderRight(distance*ticksPerInch+frontLeft.getCurrentPosition());
+        setDriveMotorMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-   setToForward(power);
-   do{
-    frontLDist=Math.abs(frontLeft.getTargetPosition()-frontLeft.getCurrentPosition());
-    frontRDist=Math.abs(frontRight.getTargetPosition()-frontRight.getCurrentPosition());
-    backLDist=Math.abs(backLeft.getTargetPosition()-backLeft.getCurrentPosition());
-    backRDist=Math.abs(backRight.getTargetPosition()-backRight.getCurrentPosition());
+        setToForward(power);
+        do{
+            frontLDist=Math.abs(frontLeft.getTargetPosition()-frontLeft.getCurrentPosition());
+            frontRDist=Math.abs(frontRight.getTargetPosition()-frontRight.getCurrentPosition());
+            backLDist=Math.abs(backLeft.getTargetPosition()-backLeft.getCurrentPosition());
+            backRDist=Math.abs(backRight.getTargetPosition()-backRight.getCurrentPosition());
 
-    telemetry.addData("frontLeft distanceFrom: ",frontLDist);
-    telemetry.addData("frontRight distanceFrom: ",frontRDist);
-    telemetry.addData("backLeft distanceFrom: ",backLDist);
-    telemetry.addData("backRight distanceFrom: ",backRDist);
-    telemetry.update();
-   }while(
-           frontLDist>encoderSafeZone &&
-                   frontRDist>encoderSafeZone &&
-                   backLDist>encoderSafeZone &&
-                   backRDist>encoderSafeZone
-   );
-   setToStill();
-  }
-  public void driveRightEncoder(double power, int distance) {
-   int frontLDist, frontRDist, backLDist, backRDist;
-   setMotorEncoderRight(distance*ticksPerInch+frontLeft.getCurrentPosition());
-   setDriveMotorMode(DcMotor.RunMode.RUN_TO_POSITION);
+            telemetry.addData("frontLeft distanceFrom: ",frontLDist);
+            telemetry.addData("frontRight distanceFrom: ",frontRDist);
+            telemetry.addData("backLeft distanceFrom: ",backLDist);
+            telemetry.addData("backRight distanceFrom: ",backRDist);
+            telemetry.update();
+        }while(
+                frontLDist>encoderSafeZone &&
+                        frontRDist>encoderSafeZone &&
+                        backLDist>encoderSafeZone &&
+                        backRDist>encoderSafeZone
+        );
+        setToStill();
+    }
+    public void turnClockwiseEncoder(double power, int distance) {
+        int frontLDist, frontRDist, backLDist, backRDist;
+        setMotorEncoderClockwise(distance*ticksPerInch+frontLeft.getCurrentPosition());
+        setDriveMotorMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-   setToForward(power);
-   do{
-    frontLDist=Math.abs(frontLeft.getTargetPosition()-frontLeft.getCurrentPosition());
-    frontRDist=Math.abs(frontRight.getTargetPosition()-frontRight.getCurrentPosition());
-    backLDist=Math.abs(backLeft.getTargetPosition()-backLeft.getCurrentPosition());
-    backRDist=Math.abs(backRight.getTargetPosition()-backRight.getCurrentPosition());
+        setToForward(power);
+        do{
+            frontLDist=Math.abs(frontLeft.getTargetPosition()-frontLeft.getCurrentPosition());
+            frontRDist=Math.abs(frontRight.getTargetPosition()-frontRight.getCurrentPosition());
+            backLDist=Math.abs(backLeft.getTargetPosition()-backLeft.getCurrentPosition());
+            backRDist=Math.abs(backRight.getTargetPosition()-backRight.getCurrentPosition());
 
-    telemetry.addData("frontLeft distanceFrom: ",frontLDist);
-    telemetry.addData("frontRight distanceFrom: ",frontRDist);
-    telemetry.addData("backLeft distanceFrom: ",backLDist);
-    telemetry.addData("backRight distanceFrom: ",backRDist);
-    telemetry.update();
-   }while(
-           frontLDist>encoderSafeZone &&
-                   frontRDist>encoderSafeZone &&
-                   backLDist>encoderSafeZone &&
-                   backRDist>encoderSafeZone
-   );
-   setToStill();
-  }
-  public void turnClockwiseEncoder(double power, int distance) {
-   int frontLDist, frontRDist, backLDist, backRDist;
-   setMotorEncoderClockwise(distance*ticksPerInch+frontLeft.getCurrentPosition());
-   setDriveMotorMode(DcMotor.RunMode.RUN_TO_POSITION);
+            telemetry.addData("frontLeft distanceFrom: ",frontLDist);
+            telemetry.addData("frontRight distanceFrom: ",frontRDist);
+            telemetry.addData("backLeft distanceFrom: ",backLDist);
+            telemetry.addData("backRight distanceFrom: ",backRDist);
+            telemetry.update();
+        }while(
+                frontLDist>encoderSafeZone &&
+                        frontRDist>encoderSafeZone &&
+                        backLDist>encoderSafeZone &&
+                        backRDist>encoderSafeZone
+        );
+        setToStill();
+    }
+    public void turnCounterwiseEncoder(double power, int distance) {
+        int frontLDist, frontRDist, backLDist, backRDist;
+        setMotorEncoderCounterwise(distance * ticksPerInch + frontLeft.getCurrentPosition());
+        setDriveMotorMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-   setToForward(power);
-   do{
-    frontLDist=Math.abs(frontLeft.getTargetPosition()-frontLeft.getCurrentPosition());
-    frontRDist=Math.abs(frontRight.getTargetPosition()-frontRight.getCurrentPosition());
-    backLDist=Math.abs(backLeft.getTargetPosition()-backLeft.getCurrentPosition());
-    backRDist=Math.abs(backRight.getTargetPosition()-backRight.getCurrentPosition());
+        setToForward(power);
+        do {
+            frontLDist = Math.abs(frontLeft.getTargetPosition() - frontLeft.getCurrentPosition());
+            frontRDist = Math.abs(frontRight.getTargetPosition() - frontRight.getCurrentPosition());
+            backLDist = Math.abs(backLeft.getTargetPosition() - backLeft.getCurrentPosition());
+            backRDist = Math.abs(backRight.getTargetPosition() - backRight.getCurrentPosition());
 
-    telemetry.addData("frontLeft distanceFrom: ",frontLDist);
-    telemetry.addData("frontRight distanceFrom: ",frontRDist);
-    telemetry.addData("backLeft distanceFrom: ",backLDist);
-    telemetry.addData("backRight distanceFrom: ",backRDist);
-    telemetry.update();
-   }while(
-           frontLDist>encoderSafeZone &&
-                   frontRDist>encoderSafeZone &&
-                   backLDist>encoderSafeZone &&
-                   backRDist>encoderSafeZone
-   );
-   setToStill();
-  }
-  public void turnCounterwiseEncoder(double power, int distance) {
-   int frontLDist, frontRDist, backLDist, backRDist;
-   setMotorEncoderCounterwise(distance * ticksPerInch + frontLeft.getCurrentPosition());
-   setDriveMotorMode(DcMotor.RunMode.RUN_TO_POSITION);
+            telemetry.addData("frontLeft distanceFrom: ", frontLDist);
+            telemetry.addData("frontRight distanceFrom: ", frontRDist);
+            telemetry.addData("backLeft distanceFrom: ", backLDist);
+            telemetry.addData("backRight distanceFrom: ", backRDist);
+            telemetry.update();
+        } while (
+                frontLDist > encoderSafeZone &&
+                        frontRDist > encoderSafeZone &&
+                        backLDist > encoderSafeZone &&
+                        backRDist > encoderSafeZone
+        );
+        setToStill();
+    }
 
-   setToForward(power);
-   do {
-    frontLDist = Math.abs(frontLeft.getTargetPosition() - frontLeft.getCurrentPosition());
-    frontRDist = Math.abs(frontRight.getTargetPosition() - frontRight.getCurrentPosition());
-    backLDist = Math.abs(backLeft.getTargetPosition() - backLeft.getCurrentPosition());
-    backRDist = Math.abs(backRight.getTargetPosition() - backRight.getCurrentPosition());
+    public void setDriveMotorZeroPowerBehavior(DcMotor.ZeroPowerBehavior behavior) {
+        switch(behavior) {
+            case BRAKE:
+                if(frontLeft.getZeroPowerBehavior()==DcMotor.ZeroPowerBehavior.BRAKE)
+                    break;
+                frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);break;
+            case FLOAT:
+                if(frontLeft.getZeroPowerBehavior()==DcMotor.ZeroPowerBehavior.FLOAT)
+                    break;
+                frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+                frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+                backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+                backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);break;
+        }
+    }
 
-    telemetry.addData("frontLeft distanceFrom: ", frontLDist);
-    telemetry.addData("frontRight distanceFrom: ", frontRDist);
-    telemetry.addData("backLeft distanceFrom: ", backLDist);
-    telemetry.addData("backRight distanceFrom: ", backRDist);
-    telemetry.update();
-   } while (
-           frontLDist > encoderSafeZone &&
-                   frontRDist > encoderSafeZone &&
-                   backLDist > encoderSafeZone &&
-                   backRDist > encoderSafeZone
-   );
-   setToStill();
-  }
+    //for use with driveEncoder methods
+    public void setDriveMotorPower(double power){
+        frontLeft.setPower(power);
+        frontRight.setPower(power);
+        backLeft.setPower(power);
+        backRight.setPower(power);
+    }
 
-  public void setDriveMotorZeroPowerBehavior(DcMotor.ZeroPowerBehavior behavior) {
-   switch(behavior) {
-    case BRAKE:
-     if(frontLeft.getZeroPowerBehavior()==DcMotor.ZeroPowerBehavior.BRAKE)
-      break;
-     frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-     frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-     backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-     backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);break;
-    case FLOAT:
-     if(frontLeft.getZeroPowerBehavior()==DcMotor.ZeroPowerBehavior.FLOAT)
-      break;
-     frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-     frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-     backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-     backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);break;
-   }
-  }
+    //to use with servos or to wait
+    public void waiter(int time) {
+        timer.reset();
+        while (timer.milliseconds() < time) {
+        }
+    }
+    /*=======================================
+     *
+     *============End do not edit============
+     *
+     *=======================================*/
 
-  //for use with driveEncoder methods
-  public void setDriveMotorPower(double power){
-   frontLeft.setPower(power);
-   frontRight.setPower(power);
-   backLeft.setPower(power);
-   backRight.setPower(power);
-  }
+    /*
+     * __________________
+     * |                 |
+     * | _______________ |
+     * | |      92     | |
+     * | |_____________| |
+     * | |_____________| |
+     * | |             | |
+     * | |      67     | |
+     * | |             | |
+     * | |_____________| |
+     * | |_____________| |
+     * | |             | |
+     * | |      42     | |
+     * | |             | |
+     * | |_____________| |
+     * |                 |
+     * |                 |
+     * |_________________|
+     *
+     * ______
+     * | 1  |
+     * |____|______
+     *       | 2  |
+     * ______|____|
+     * | 3  |
+     * |____|
+     *
+     */
 
-  //to use with servos or to wait
-  public void waiter(int time) {
-   timer.reset();
-   while (timer.milliseconds() < time) {
-   }
-  }
-/*=======================================
- *
- *============End do not edit============
- *
- *=======================================*/
+    //custom code for specific challenge
 
-/*
-* __________________
-* |                 |
-* | _______________ |
-* | |      92     | |
-* | |_____________| |
-* | |_____________| |
-* | |             | |
-* | |      67     | |
-* | |             | |
-* | |_____________| |
-* | |_____________| |
-* | |             | |
-* | |      42     | |
-* | |             | |
-* | |_____________| |
-* |                 |
-* |                 |
-* |_________________|
-*
-* ______
-* | 1  |
-* |____|______
-*       | 2  |
-* ______|____|
-* | 3  |
-* |____|
-*
-*/
-
-  //custom code for specific challenge
-
-  //This is for Game Changers
+    //This is for Game Changers
 
     double angle; //Calculate the angle of te launcher
 
@@ -551,8 +551,8 @@ public class Hardware {
             telemetry.addData("At angle: ", LaunchAngle.getCurrentPosition());
             telemetry.update();
         }while(
-            LaunchAngle.getCurrentPosition() < LaunchAngle.getTargetPosition() - 50 &&
-            LaunchAngle.getCurrentPosition() > LaunchAngle.getTargetPosition() + 50
+                LaunchAngle.getCurrentPosition() < LaunchAngle.getTargetPosition() - 50 &&
+                        LaunchAngle.getCurrentPosition() > LaunchAngle.getTargetPosition() + 50
         );
 
 
@@ -632,16 +632,14 @@ public class Hardware {
         do{
             if(side == 0){ //Blue
                 //rotate +x
-                setToClockwise(0.6);
             }else if(side == 1){ //Red
                 //rotate -x
-                setToCounterwise(0.6);
             }
         }while(
             // image ! within the range of a specified value
-            true
+                true
         );
 
     }
 
- }
+}
