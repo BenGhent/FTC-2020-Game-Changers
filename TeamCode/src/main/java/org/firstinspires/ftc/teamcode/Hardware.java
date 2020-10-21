@@ -644,10 +644,10 @@ public class Hardware {
 
     }
 
-    public void lock(int dir){
-        if(dir == 0){
+    public void lock(){
+        if(side == 0){
 
-        }else if(dir ==1){
+        }else if(side ==1){
             
         }
     }
