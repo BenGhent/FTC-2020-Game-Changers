@@ -43,14 +43,21 @@ public class Auto {
         r.fire(3);
     }
 
-    public void launch(int[] num){//the number of power shots
+    public void launch(int first, int second, int third){//the number of power shots
         //launches the ring to a specified power shot
-        for(int i = 0; i<=num.length;i++){
-            if(num[i] != 0){
-                r.Angle();
-                r.fire();
-            }
-            r.driveRightEncoder(0.6, 10);
+        if(first == 1){
+            r.Angle();
+            r.fire();
+        }
+        r.driveRightEncoder(0.6, 10);
+        if(second == 1){
+            r.Angle();
+            r.fire();
+        }
+        r.driveRightEncoder(0.6,10);
+        if(third ==1){
+            r.Angle();
+            r.fire();
         }
     }
 
