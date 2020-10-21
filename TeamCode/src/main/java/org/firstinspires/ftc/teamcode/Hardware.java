@@ -515,6 +515,8 @@ public class Hardware {
 
     double angle; //Calculate the angle of te launcher
 
+    public int side;
+
     public void Angle(){// Firing sequence for launching rings
         //use equation to find the angle that the firing mechanism must rotate to
         //lock("Red");// lock onto target using CV
