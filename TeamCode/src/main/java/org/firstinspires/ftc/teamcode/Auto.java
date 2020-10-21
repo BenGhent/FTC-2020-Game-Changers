@@ -41,7 +41,7 @@ public class Auto {
         r.fire(3);
     }
 
-    public void launch(int pos, int[] num){//position, the number of power shots
+    public void launch(int[] num){//the number of power shots
         //launches the ring to a specified power shot
         for(int i = 0; i<=num.length;i++){
             if(num[i] != 0){
@@ -52,6 +52,7 @@ public class Auto {
         }
     }
 
+    //only used if we have an arm to place rings in
     public void launch(boolean TF){
         //just place the rings in te bottom placement
         if(pos == 0){ //hasn't moved
