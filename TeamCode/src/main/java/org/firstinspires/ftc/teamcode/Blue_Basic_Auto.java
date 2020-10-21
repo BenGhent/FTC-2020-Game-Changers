@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.util.Range;
 
 @Autonomous(name="Blue_Basic_Auto", group="Linear Opmode")
 //@Disable
-public class Blue_Basic_Auto extends Linear_OpMode {
+public class Blue_Basic_Auto extends LinearOpMode {
 
     Hardware r = new Hardware();
 
@@ -22,7 +22,7 @@ public class Blue_Basic_Auto extends Linear_OpMode {
         r.initRobot(hardwareMap, telemetry);
         r.initAutonomous();
 
-        r.side = 0;
+        r.side = 0; //Blue side
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
