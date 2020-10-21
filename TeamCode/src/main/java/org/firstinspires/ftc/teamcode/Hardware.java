@@ -622,7 +622,7 @@ public class Hardware {
         return Dist.getDistance(DistanceUnit.MM);
     }
 
-    public void lock(String RB){// RB = which side, Red or Blue
+    public void lock(){// RB = which side, Red or Blue
         // This method will lock onto the target on the wall
         // This will use the camera and the image to locate where the image is
         // Use a do while
@@ -630,10 +630,10 @@ public class Hardware {
         setDriveMotorMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         do{
-            if(RB == "Red"){
+            if(side == 0){ //Blue
                 //rotate +x
                 setToClockwise(0.6);
-            }else if(RB == "Blue"){
+            }else if(side == 1){ //Red
                 //rotate -x
                 setToCounterwise(0.6);
             }
@@ -642,14 +642,6 @@ public class Hardware {
             true
         );
 
-    }
-
-    public void lock(){
-        if(side == 0){
-
-        }else if(side ==1){
-            
-        }
     }
 
  }
