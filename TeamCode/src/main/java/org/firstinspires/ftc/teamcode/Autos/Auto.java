@@ -17,11 +17,12 @@ public class Auto {
 
     int mult = 1;
 
-    private void init(){
+    public void init(){
         if(side == 0){
             mult = -1;
         }
     }
+
 
 
     public void wobbleGoal(){

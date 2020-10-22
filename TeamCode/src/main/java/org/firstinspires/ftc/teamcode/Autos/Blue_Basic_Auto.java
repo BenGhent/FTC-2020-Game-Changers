@@ -22,6 +22,8 @@ public class Blue_Basic_Auto extends LinearOpMode {
 
         r.side = 0; //Blue side
 
+        a.init();
+
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
