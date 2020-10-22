@@ -78,7 +78,7 @@ public class Hardware {
 
     public static final int ticksPerInch=56;
 
-    public static final double ticksPerDeg=1; //the number of ticks it takes for the axle of the motor to rotate 1 deg
+    public static final double ticksPerDeg=9.7; //the number of ticks it takes for the axle of the motor to rotate 1 deg, doing a (28(5*5*5))/360 = 9.7
 
     public static final int encoderSafeZone=50;/*a motor must be within this many ticks of its
    target to be considered "on target"*/
@@ -521,9 +521,9 @@ public class Hardware {
 
     //This is for Game Changers
 
-    double angle; //Calculate the angle of te launcher
+    double angle; //Calculate the angle of the launcher
 
-    public int side; //For the robot to know which side of the map it is dealing with during auto and TeleOP 0 = blue, 1 = red
+    public int side; //For the robot to know which side of the map it is dealing with during Auto and TeleOP 0 = blue, 1 = red
 
     public void Angle(){// Firing sequence for launching rings
         //use equation to find the angle that the firing mechanism must rotate to
