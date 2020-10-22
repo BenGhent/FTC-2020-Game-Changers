@@ -85,9 +85,17 @@ public class Hardware {
 
     public static final int minRotDist=0;
 
-    public static final int GoalHeight=0; //Height of the goal from the ground
+    public static final int GoalHeight=0;  //Height of the goal from the ground
 
     public static final int RobotHeight=0; //Height of the robot from the ground
+
+    public static final double g=9.8;      //Gravity
+
+    public static final int B=0;           //Drag
+
+    public static final int V=0;           //Terminal Velocity
+
+    public static final int N=0;           //Terminal Velocity Constant
 
 
     public void initRobot(HardwareMap spareMap, Telemetry tempTelemetry){
@@ -521,13 +529,7 @@ public class Hardware {
         //use equation to find the angle that the firing mechanism must rotate to
         //lock("Red");// lock onto target using CV
 
-        double a = 0;//Math.sqrt(2(9.8)(goalHeight - botHeight)
-
-        double b = 0;//Dist.getDistMM()
-
-        double c = 0;//
-
-        angle = Math.atan((a*b)/c); // Do the math here (Math.atan(Math.sqrt(2(gavity)(Hight of goal - height of tool)) / distance to goal / Math.sqrt((2 * Distance to goal)/)
+        angle = Math.atan((Math.sqrt(2*(g)*(GoalHeight-RobotHeight))/(getDist()/Math.sqrt((2*getDist())/(-B*V^N))))); // Do the math here (Math.atan(Math.sqrt(2(gavity)(Hight of goal - height of tool)) / distance to goal / Math.sqrt((2 * Distance to goal)/)
 
         angle = angle * ticksPerDeg;
 
@@ -554,21 +556,13 @@ public class Hardware {
                 LaunchAngle.getCurrentPosition() < LaunchAngle.getTargetPosition() - 50 &&
                         LaunchAngle.getCurrentPosition() > LaunchAngle.getTargetPosition() + 50
         );
-
-
     }
 
     public void Angle(int height){//height is the height of the target position from ground
 
         //same code as Angle() but variable
 
-        double a = 0;//Math.sqrt(2(9.8)(goalHeight - botHeight)
-
-        double b = 0;//Dist.getDistMM()
-
-        double c = 0;//
-
-        angle = Math.atan((a*b)/c); // Do the math here (Math.atan(Math.sqrt(2(gavity)(Hight of goal - height of tool)) / distance to goal / Math.sqrt((2 * Distance to goal)/)
+        angle = Math.atan((Math.sqrt(2*(g)*(height-RobotHeight))/(getDist()/Math.sqrt((2*getDist())/(-B*V^N))))); // Do the math here (Math.atan(Math.sqrt(2(gavity)(Hight of goal - height of tool)) / distance to goal / Math.sqrt((2 * Distance to goal)/)
 
         angle = angle * ticksPerDeg;
 
