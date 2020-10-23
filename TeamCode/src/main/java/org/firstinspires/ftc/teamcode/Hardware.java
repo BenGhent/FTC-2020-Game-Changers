@@ -85,7 +85,7 @@ public class Hardware {
 
     public static final int minRotDist=0;
 
-    public static final int GoalHeight=0;  //Height of the goal from the ground
+    public static final int GoalHeight=92;  //Height of the goal from the ground
 
     public static final int RobotHeight=0; //Height of the robot from the ground
 
