@@ -95,10 +95,45 @@ This uses Trig to calculate the angle of the gamepad sticks to get the direction
   
   ### AutoTransitioner
   
-  This program was created to quickly and easly transfer from our autonomous to our TeleOp.
+  This class was created to quickly and easly transfer from our autonomous to our TeleOp.
   
   This is not our software, all credit goes to KNO3 Robotics
+
+  ###Auto
+
+  This class was created to ease the creation of the autonomous programs.
+
+  This class was created to allow us to make custom autonomous code on the fly to adapt to our teammates autonomous.
+
+  referenced as:
+  ```java
+  Auto a = new Auto();
+  ```
+
+  We use redefinition of methods so that we can easily understand what they do, such as:
+
+  ```java
+  public void launch(){
+    //meant to launch into the goal
+}
+
+public void launch(int a, int b, int c){
+    //this method will shoot down the power shots depending on which we want
+    if(a == 1){
+        //angle cannon and fire
+    }
+    //move to the right
+    if(b == 1){
+        //angle cannon and fire
+    }
+    //move the robot
+    if(c == 1){
+        //angle cannon and fire
+    }
+}
+
+  ```
   
-  ### Tensorflow
+  ###CV
   
   This program is the backbone of our computer vision and holds all of our methods to get information from the camera, x, and y locations and the probability of if what the bot is looking at is the intended target
