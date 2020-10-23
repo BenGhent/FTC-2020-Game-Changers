@@ -134,6 +134,6 @@ public void launch(int a, int b, int c){
 
   ```
   
-  ###CV
+  ### CV
   
   This program is the backbone of our computer vision and holds all of our methods to get information from the camera, x, and y locations and the probability of if what the bot is looking at is the intended target
