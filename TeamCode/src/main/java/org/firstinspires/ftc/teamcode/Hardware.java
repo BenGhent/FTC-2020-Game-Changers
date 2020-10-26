@@ -571,7 +571,7 @@ public class Hardware {
         //same code as Angle() but variable
 
         angle = Math.atan(
-                (Math.sqrt(2*(g)*(GoalHeight-RobotHeight))/
+                (Math.sqrt(2*(g)*(height-RobotHeight))/
                 (getDist()/Math.sqrt(
                 (2*getDist())/
                 ((-1*B)*V^N)
