@@ -78,12 +78,13 @@ public class Hardware {
 
     public static final int ticksPerInch=56;
 
-    public static final double ticksPerDeg=9.7; //the number of ticks it takes for the axle of the motor to rotate 1 deg, doing a (28(5*5*5))/360 = 9.7
-
     public static final int encoderSafeZone=50;/*a motor must be within this many ticks of its
    target to be considered "on target"*/
 
     public static final int minRotDist=0;
+
+    //angle variables
+    public static final double ticksPerDeg=9.7; //the number of ticks it takes for the axle of the motor to rotate 1 deg, doing a (28(5*5*5))/360 = 9.7
 
     public static final int GoalHeight=92;  //Height of the goal from the ground
 
@@ -541,7 +542,7 @@ public class Hardware {
 
         angle = angle * ticksPerDeg;
 
-        LaunchAngle.setTargetPosition((int)angle-LaunchAngle.getCurrentPosition());
+        LaunchAngle.setTargetPosition((int)angle);
 
         //spin up launch motors
         LauncherLeft.setPower(0.6);
@@ -557,12 +558,12 @@ public class Hardware {
             }else if(LaunchAngle.getTargetPosition() > LaunchAngle.getCurrentPosition()){
                 LaunchAngle.setPower(0.6);
             }
-            telemetry.addData("Angle set: ", angle);//in deg
-            telemetry.addData("At angle: ", LaunchAngle.getCurrentPosition());
+            telemetry.addData("Angle set: ", angle/ticksPerDeg);//in deg
+            telemetry.addData("At angle: ", LaunchAngle.getCurrentPosition()/ticksPerDeg);
             telemetry.update();
         }while(
-                LaunchAngle.getCurrentPosition() < LaunchAngle.getTargetPosition() - 50 &&
-                        LaunchAngle.getCurrentPosition() > LaunchAngle.getTargetPosition() + 50
+                LaunchAngle.getCurrentPosition() < LaunchAngle.getTargetPosition() - 10 &&
+                        LaunchAngle.getCurrentPosition() > LaunchAngle.getTargetPosition() + 10
         );
     }
 
@@ -582,7 +583,7 @@ public class Hardware {
 
         angle = angle * ticksPerDeg;
 
-        LaunchAngle.setTargetPosition((int)angle-LaunchAngle.getCurrentPosition());
+        LaunchAngle.setTargetPosition((int)angle);
 
         //spin up launch motors
         LauncherLeft.setPower(0.6);
@@ -598,12 +599,12 @@ public class Hardware {
             }else if(LaunchAngle.getTargetPosition() > LaunchAngle.getCurrentPosition()){
                 LaunchAngle.setPower(0.6);
             }
-            telemetry.addData("Angle set: ", angle);//in deg
-            telemetry.addData("At angle: ", LaunchAngle.getCurrentPosition());
+            telemetry.addData("Angle set: ", angle/ticksPerDeg);//in deg
+            telemetry.addData("At angle: ", LaunchAngle.getCurrentPosition()/ticksPerDeg);
             telemetry.update();
         }while(
-                LaunchAngle.getCurrentPosition() < LaunchAngle.getTargetPosition() - 50 &&
-                        LaunchAngle.getCurrentPosition() > LaunchAngle.getTargetPosition() + 50
+                LaunchAngle.getCurrentPosition() < LaunchAngle.getTargetPosition() - 10 &&
+                        LaunchAngle.getCurrentPosition() > LaunchAngle.getTargetPosition() + 10
         );
     }
 
