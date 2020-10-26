@@ -523,6 +523,8 @@ public class Hardware {
 
     double angle; //Calculate the angle of the launcher
 
+    int zero=0;
+
     public int side; //For the robot to know which side of the map it is dealing with during Auto and TeleOP 0 = blue, 1 = red
 
     public void Angle(){// Firing sequence for launching rings
@@ -541,7 +543,7 @@ public class Hardware {
 
         angle = angle * ticksPerDeg;
 
-        LaunchAngle.setTargetPosition((int)angle-LaunchAngle.getCurrentPosition());
+        LaunchAngle.setTargetPosition((int)angle-LaunchAngle.getCurrentPosition()-zero);
 
         //spin up launch motors
         LauncherLeft.setPower(0.6);
@@ -582,7 +584,7 @@ public class Hardware {
 
         angle = angle * ticksPerDeg;
 
-        LaunchAngle.setTargetPosition((int)angle-LaunchAngle.getCurrentPosition());
+        LaunchAngle.setTargetPosition((int)angle-LaunchAngle.getCurrentPosition()-zero);
 
         //spin up launch motors
         LauncherLeft.setPower(0.6);
@@ -650,6 +652,19 @@ public class Hardware {
                 true
         );
 
+    }
+    int x=0;
+
+    public void init_angle(){
+        LaunchAngle.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        do{
+            LaunchAngle.setPower(-0.6);
+            x++;
+        }while(
+                //rotate the angle motor until the cannon hits the endstop
+               x == 0
+        );
+        zero = LaunchAngle.getCurrentPosition();
     }
 
 }
