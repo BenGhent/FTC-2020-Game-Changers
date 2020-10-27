@@ -522,27 +522,54 @@ public class Hardware {
 
     //This is for Game Changers
 
-    double angle; //Calculate the angle of the launcher
+    //double angle; //Calculate the angle of the launcher
 
     public int side; //For the robot to know which side of the map it is dealing with during Auto and TeleOP 0 = blue, 1 = red
+
+    public double angle(){
+        return Math.atan(
+            (Math.sqrt(2*(g)*(GoalHeight-RobotHeight))/
+                    (getDist()/Math.sqrt(
+                            (2*getDist())/
+                                    ((-1*B)*V^N)
+                    )
+                    )
+            )
+        );
+
+    }
+
+    public double angle(int height){
+        return Math.atan(
+                (Math.sqrt(2*(g)*(height-RobotHeight))/
+                        (getDist()/Math.sqrt(
+                                (2*getDist())/
+                                        ((-1*B)*V^N)
+                        )
+                        )
+                )
+        );
+
+    }
+
+    public double angle(int height, int dist, int RobotHeight){
+        return Math.atan(
+                (Math.sqrt(2*(g)*(height-RobotHeight))/
+                        (dist/Math.sqrt(
+                                (2*dist)/
+                                        ((-1*B)*V^N)
+                        )
+                        )
+                )
+        );
+
+    }
 
     public void Angle(){// Firing sequence for launching rings
         //use equation to find the angle that the firing mechanism must rotate to
         //lock("Red");// lock onto target using CV
 
-        angle = Math.atan(
-                (Math.sqrt(2*(g)*(GoalHeight-RobotHeight))/
-                (getDist()/Math.sqrt(
-                (2*getDist())/
-                ((-1*B)*V^N)
-                )
-                )
-            )
-        );
-
-        angle = angle * ticksPerDeg;
-
-        LaunchAngle.setTargetPosition((int)angle);
+        LaunchAngle.setTargetPosition((int)(angle()*ticksPerDeg));
 
         //spin up launch motors
         LauncherLeft.setPower(0.6);
@@ -558,7 +585,7 @@ public class Hardware {
             }else if(LaunchAngle.getTargetPosition() > LaunchAngle.getCurrentPosition()){
                 LaunchAngle.setPower(0.6);
             }
-            telemetry.addData("Angle set: ", angle/ticksPerDeg);//in deg
+            telemetry.addData("Angle set: ", angle());//in deg
             telemetry.addData("At angle: ", LaunchAngle.getCurrentPosition()/ticksPerDeg);
             telemetry.update();
         }while(
@@ -571,19 +598,7 @@ public class Hardware {
 
         //same code as Angle() but variable
 
-        angle = Math.atan(
-                (Math.sqrt(2*(g)*(height-RobotHeight))/
-                (getDist()/Math.sqrt(
-                (2*getDist())/
-                ((-1*B)*V^N)
-                )
-                )
-            )
-        );
-
-        angle = angle * ticksPerDeg;
-
-        LaunchAngle.setTargetPosition((int)angle);
+        LaunchAngle.setTargetPosition((int)(angle(height)*ticksPerDeg));
 
         //spin up launch motors
         LauncherLeft.setPower(0.6);
@@ -599,7 +614,36 @@ public class Hardware {
             }else if(LaunchAngle.getTargetPosition() > LaunchAngle.getCurrentPosition()){
                 LaunchAngle.setPower(0.6);
             }
-            telemetry.addData("Angle set: ", angle/ticksPerDeg);//in deg
+            telemetry.addData("Angle set: ", angle());//in deg
+            telemetry.addData("At angle: ", LaunchAngle.getCurrentPosition()/ticksPerDeg);
+            telemetry.update();
+        }while(
+                LaunchAngle.getCurrentPosition() < LaunchAngle.getTargetPosition() - 10 &&
+                        LaunchAngle.getCurrentPosition() > LaunchAngle.getTargetPosition() + 10
+        );
+    }
+
+    public void Angle_test(int angle){//height is the height of the target position from ground
+
+        //same code as Angle() but variable
+
+        LaunchAngle.setTargetPosition((int)(angle*ticksPerDeg));
+
+        //spin up launch motors
+        LauncherLeft.setPower(0.6);
+        LauncherRight.setPower(0.6);
+        //use mathe to move into correct angle
+        if(LaunchAngle.getMode() != DcMotor.RunMode.RUN_TO_POSITION) {
+            LaunchAngle.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }
+
+        do{
+            if(LaunchAngle.getTargetPosition() < LaunchAngle.getCurrentPosition()){
+                LaunchAngle.setPower(-0.6);
+            }else if(LaunchAngle.getTargetPosition() > LaunchAngle.getCurrentPosition()){
+                LaunchAngle.setPower(0.6);
+            }
+            telemetry.addData("Angle set: ", angle);//in deg
             telemetry.addData("At angle: ", LaunchAngle.getCurrentPosition()/ticksPerDeg);
             telemetry.update();
         }while(
