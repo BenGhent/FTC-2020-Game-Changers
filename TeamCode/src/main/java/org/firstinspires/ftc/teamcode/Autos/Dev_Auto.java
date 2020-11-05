@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Autos;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.AutoTransitioner;
 import org.firstinspires.ftc.teamcode.Hardware;
@@ -19,10 +20,14 @@ public class Dev_Auto extends LinearOpMode {//This will test the new methods for
         r.initRobot(hardwareMap, telemetry);
         r.initAutonomous();
 
+        r.frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        r.Angle_test(75);
+        do{
+            r.frontLeft.setPower(0.6);
+        }while(opModeIsActive());
 
     }
 }
