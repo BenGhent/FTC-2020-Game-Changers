@@ -85,10 +85,10 @@ public class TeleOp_Basic extends OpMode {
         double power3= vy -rotation;
         double power4= vx +rotation;
 
-        r.frontLeft.setPower(power1 * deflator);
-        r.frontRight.setPower(power2 * deflator);
-        r.backLeft.setPower(power3 * deflator);
-        r.backRight.setPower(power4 * deflator);
+        r.backRight.setPower(-power1 * deflator);
+        r.backLeft.setPower(power2 * deflator);
+        r.frontLeft.setPower(power3 * deflator);
+        r.frontRight.setPower(-power4 * deflator);
 
     }
 }
