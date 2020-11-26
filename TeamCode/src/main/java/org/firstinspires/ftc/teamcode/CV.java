@@ -1,231 +1,173 @@
-//package org.firstinspires.ftc.teamcode;
-//
-//import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-//import org.opencv.core.Mat;
-//import org.opencv.core.Point;
-//import org.opencv.core.Scalar;
-//import org.opencv.imgproc.Imgproc;
-//import org.openftc.easyopencv.OpenCvCamera;
-//import org.openftc.easyopencv.OpenCvCameraFactory;
-//import org.openftc.easyopencv.OpenCvCameraRotation;
-//import org.openftc.easyopencv.OpenCvPipeline;
-//import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-//
-//
-//
-//public class CV extends LinearOpMode {
-//
-//    //not used until we have an understanding of tensorflow
-//
-//    OpenCvCamera webcam;
-//
-//    @Override
-//    public void runOpMode()
-//    {
-//        /*
-//         * Instantiate an OpenCvCamera object for the camera we'll be using.
-//         * In this sample, we're using a webcam. Note that you will need to
-//         * make sure you have added the webcam to your configuration file and
-//         * adjusted the name here to match what you named it in said config file.
-//         *
-//         * We pass it the view that we wish to use for camera monitor (on
-//         * the RC phone). If no camera monitor is desired, use the alternate
-//         * single-parameter constructor instead (commented out below)
-//         */
-//        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-//        webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
-//
-//        // OR...  Do Not Activate the Camera Monitor View
-//        //webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"));
-//
-//        /*
-//         * Specify the image processing pipeline we wish to invoke upon receipt
-//         * of a frame from the camera. Note that switching pipelines on-the-fly
-//         * (while a streaming session is in flight) *IS* supported.
-//         */
-//        webcam.setPipeline(new SamplePipeline());
-//
-//        /*
-//         * Open the connection to the camera device. New in v1.4.0 is the ability
-//         * to open the camera asynchronously, and this is now the recommended way
-//         * to do it. The benefits of opening async include faster init time, and
-//         * better behavior when pressing stop during init (i.e. less of a chance
-//         * of tripping the stuck watchdog)
-//         *
-//         * If you really want to open synchronously, the old method is still available.
-//         */
-//        webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
-//        {
-//            @Override
-//            public void onOpened()
-//            {
-//                /*
-//                 * Tell the webcam to start streaming images to us! Note that you must make sure
-//                 * the resolution you specify is supported by the camera. If it is not, an exception
-//                 * will be thrown.
-//                 *
-//                 * Keep in mind that the SDK's UVC driver (what OpenCvWebcam uses under the hood) only
-//                 * supports streaming from the webcam in the uncompressed YUV image format. This means
-//                 * that the maximum resolution you can stream at and still get up to 30FPS is 480p (640x480).
-//                 * Streaming at e.g. 720p will limit you to up to 10FPS and so on and so forth.
-//                 *
-//                 * Also, we specify the rotation that the webcam is used in. This is so that the image
-//                 * from the camera sensor can be rotated such that it is always displayed with the image upright.
-//                 * For a front facing camera, rotation is defined assuming the user is looking at the screen.
-//                 * For a rear facing camera or a webcam, rotation is defined assuming the camera is facing
-//                 * away from the user.
-//                 */
-//                webcam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
-//            }
-//        });
-//
-//        telemetry.addLine("Waiting for start");
-//        telemetry.update();
-//
-//        /*
-//         * Wait for the user to press start on the Driver Station
-//         */
-//        waitForStart();
-//
-//        while (opModeIsActive())
-//        {
-//            /*
-//             * Send some stats to the telemetry
-//             */
-//            telemetry.addData("Frame Count", webcam.getFrameCount());
-//            telemetry.addData("FPS", String.format("%.2f", webcam.getFps()));
-//            telemetry.addData("Total frame time ms", webcam.getTotalFrameTimeMs());
-//            telemetry.addData("Pipeline time ms", webcam.getPipelineTimeMs());
-//            telemetry.addData("Overhead time ms", webcam.getOverheadTimeMs());
-//            telemetry.addData("Theoretical max FPS", webcam.getCurrentPipelineMaxFps());
-//            telemetry.update();
-//
-//            /*
-//             * NOTE: stopping the stream from the camera early (before the end of the OpMode
-//             * when it will be automatically stopped for you) *IS* supported. The "if" statement
-//             * below will stop streaming from the camera when the "A" button on gamepad 1 is pressed.
-//             */
-//            if(gamepad1.a)
-//            {
-//                /*
-//                 * IMPORTANT NOTE: calling stopStreaming() will indeed stop the stream of images
-//                 * from the camera (and, by extension, stop calling your vision pipeline). HOWEVER,
-//                 * if the reason you wish to stop the stream early is to switch use of the camera
-//                 * over to, say, Vuforia or TFOD, you will also need to call closeCameraDevice()
-//                 * (commented out below), because according to the Android Camera API documentation:
-//                 *         "Your application should only have one Camera object active at a time for
-//                 *          a particular hardware camera."
-//                 *
-//                 * NB: calling closeCameraDevice() will internally call stopStreaming() if applicable,
-//                 * but it doesn't hurt to call it anyway, if for no other reason than clarity.
-//                 *
-//                 * NB2: if you are stopping the camera stream to simply save some processing power
-//                 * (or battery power) for a short while when you do not need your vision pipeline,
-//                 * it is recommended to NOT call closeCameraDevice() as you will then need to re-open
-//                 * it the next time you wish to activate your vision pipeline, which can take a bit of
-//                 * time. Of course, this comment is irrelevant in light of the use case described in
-//                 * the above "important note".
-//                 */
-//                webcam.stopStreaming();
-//                //webcam.closeCameraDevice();
-//            }
-//
-//            /*
-//             * For the purposes of this sample, throttle ourselves to 10Hz loop to avoid burning
-//             * excess CPU cycles for no reason. (By default, telemetry is only sent to the DS at 4Hz
-//             * anyway). Of course in a real OpMode you will likely not want to do this.
-//             */
-//            sleep(100);
-//        }
-//    }
-//
-//    /*
-//     * An example image processing pipeline to be run upon receipt of each frame from the camera.
-//     * Note that the processFrame() method is called serially from the frame worker thread -
-//     * that is, a new camera frame will not come in while you're still processing a previous one.
-//     * In other words, the processFrame() method will never be called multiple times simultaneously.
-//     *
-//     * However, the rendering of your processed image to the viewport is done in parallel to the
-//     * frame worker thread. That is, the amount of time it takes to render the image to the
-//     * viewport does NOT impact the amount of frames per second that your pipeline can process.
-//     *
-//     * IMPORTANT NOTE: this pipeline is NOT invoked on your OpMode thread. It is invoked on the
-//     * frame worker thread. This should not be a problem in the vast majority of cases. However,
-//     * if you're doing something weird where you do need it synchronized with your OpMode thread,
-//     * then you will need to account for that accordingly.
-//     */
-//    class SamplePipeline extends OpenCvPipeline
-//    {
-//        boolean viewportPaused;
-//
-//        /*
-//         * NOTE: if you wish to use additional Mat objects in your processing pipeline, it is
-//         * highly recommended to declare them here as instance variables and re-use them for
-//         * each invocation of processFrame(), rather than declaring them as new local variables
-//         * each time through processFrame(). This removes the danger of causing a memory leak
-//         * by forgetting to call mat.release(), and it also reduces memory pressure by not
-//         * constantly allocating and freeing large chunks of memory.
-//         */
-//
-//        @Override
-//        public Mat processFrame(Mat input)
-//        {
-//            /*
-//             * IMPORTANT NOTE: the input Mat that is passed in as a parameter to this method
-//             * will only dereference to the same image for the duration of this particular
-//             * invocation of this method. That is, if for some reason you'd like to save a copy
-//             * of this particular frame for later use, you will need to either clone it or copy
-//             * it to another Mat.
-//             */
-//
-//            /*
-//             * Draw a simple box around the middle 1/2 of the entire frame
-//             */
-//            Imgproc.rectangle(
-//                    input,
-//                    new Point(
-//                            input.cols()/4,
-//                            input.rows()/4),
-//                    new Point(
-//                            input.cols()*(3f/4f),
-//                            input.rows()*(3f/4f)),
-//                    new Scalar(0, 255, 0), 4);
-//
-//            /**
-//             * NOTE: to see how to get data from your pipeline to your OpMode as well as how
-//             * to change which stage of the pipeline is rendered to the viewport when it is
-//             * tapped, please see {@link PipelineStageSwitchingExample}
-//             */
-//
-//            return input;
-//        }
-//
-//        @Override
-//        public void onViewportTapped()
-//        {
-//            /*
-//             * The viewport (if one was specified in the constructor) can also be dynamically "paused"
-//             * and "resumed". The primary use case of this is to reduce CPU, memory, and power load
-//             * when you need your vision pipeline running, but do not require a live preview on the
-//             * robot controller screen. For instance, this could be useful if you wish to see the live
-//             * camera preview as you are initializing your robot, but you no longer require the live
-//             * preview after you have finished your initialization process; pausing the viewport does
-//             * not stop running your pipeline.
-//             *
-//             * Here we demonstrate dynamically pausing/resuming the viewport when the user taps it
-//             */
-//
-//            viewportPaused = !viewportPaused;
-//
-//            if(viewportPaused)
-//            {
-//                webcam.pauseViewport();
-//            }
-//            else
-//            {
-//                webcam.resumeViewport();
-//            }
-//        }
-//    }
-//
-//}
+/* Copyright (c) 2019 FIRST. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted (subject to the limitations in the disclaimer below) provided that
+ * the following conditions are met:
+ *
+ * Redistributions of source code must retain the above copyright notice, this list
+ * of conditions and the following disclaimer.
+ *
+ * Redistributions in binary form must reproduce the above copyright notice, this
+ * list of conditions and the following disclaimer in the documentation and/or
+ * other materials provided with the distribution.
+ *
+ * Neither the name of FIRST nor the names of its contributors may be used to endorse or
+ * promote products derived from this software without specific prior written permission.
+ *
+ * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS
+ * LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+ * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+package org.firstinspires.ftc.teamcode;
+
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import java.util.List;
+import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
+import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+
+/**
+ * This 2020-2021 OpMode illustrates the basics of using the TensorFlow Object Detection API to
+ * determine the position of the Ultimate Goal game elements.
+ *
+ * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
+ * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list.
+ *
+ * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
+ * is explained below.
+ */
+@TeleOp(name = "Concept: TensorFlow Object Detection Webcam", group = "Concept")
+@Disabled
+public class CV extends LinearOpMode {
+    private static final String TFOD_MODEL_ASSET = "UltimateGoal.tflite";
+    private static final String LABEL_FIRST_ELEMENT = "Quad";
+    private static final String LABEL_SECOND_ELEMENT = "Single";
+
+    /*
+     * IMPORTANT: You need to obtain your own license key to use Vuforia. The string below with which
+     * 'parameters.vuforiaLicenseKey' is initialized is for illustration only, and will not function.
+     * A Vuforia 'Development' license key, can be obtained free of charge from the Vuforia developer
+     * web site at https://developer.vuforia.com/license-manager.
+     *
+     * Vuforia license keys are always 380 characters long, and look as if they contain mostly
+     * random data. As an example, here is a example of a fragment of a valid key:
+     *      ... yIgIzTqZ4mWjk9wd3cZO9T1axEqzuhxoGlfOOI2dRzKS4T0hQ8kT ...
+     * Once you've obtained a license key, copy the string from the Vuforia web site
+     * and paste it in to your code on the next line, between the double quotes.
+     */
+    private static final String VUFORIA_KEY =
+            "AZdDUFH/////AAABmcE1YUJiRkFeqUd1ljT7cbdPlx6u99cBf3BUJkI0x0olgxQwoyRsI+d8nyiSxYL2wiDc1vclp+Ql47jL6T5X1SYSxpK7xywrV8oRnT46GyN1bCUz7K+vjW5IP7XTP9QzV831LHvu5cjc+++k/KafMAu9tcnEeGGVjqQBoAO01SfFn09TrNc3FyvHBtLHQlGi08VmF2M2koexANGpCG9gcBxWhkPvbbgAyR5MbZ4iiKLUSltYooplimJS/JX/QFqSfqQEMP7Lzq0xX+ngWdUP3Tuc45ggmJjbHTAS3dA1+hD8iFURON2gcw8/nZqsD/GJcxlocvU3FTeFpsIxWd0ow/S3jjQ3ZplJ7PuvTm1BSwfC";
+
+    /**
+     * {@link #vuforia} is the variable we will use to store our instance of the Vuforia
+     * localization engine.
+     */
+    private VuforiaLocalizer vuforia;
+
+    /**
+     * {@link #tfod} is the variable we will use to store our instance of the TensorFlow Object
+     * Detection engine.
+     */
+    private TFObjectDetector tfod;
+
+    @Override
+    public void runOpMode() {
+        // The TFObjectDetector uses the camera frames from the VuforiaLocalizer, so we create that
+        // first.
+        initVuforia();
+        initTfod();
+
+        /**
+         * Activate TensorFlow Object Detection before we wait for the start command.
+         * Do it here so that the Camera Stream window will have the TensorFlow annotations visible.
+         **/
+        if (tfod != null) {
+            tfod.activate();
+
+            // The TensorFlow software will scale the input images from the camera to a lower resolution.
+            // This can result in lower detection accuracy at longer distances (> 55cm or 22").
+            // If your target is at distance greater than 50 cm (20") you can adjust the magnification value
+            // to artificially zoom in to the center of image.  For best results, the "aspectRatio" argument
+            // should be set to the value of the images used to create the TensorFlow Object Detection model
+            // (typically 1.78 or 16/9).
+
+            // Uncomment the following line if you want to adjust the magnification and/or the aspect ratio of the input images.
+            //tfod.setZoom(2.5, 1.78);
+        }
+
+        /** Wait for the game to begin */
+        telemetry.addData(">", "Press Play to start op mode");
+        telemetry.update();
+        waitForStart();
+
+        if (opModeIsActive()) {
+            while (opModeIsActive()) {
+                if (tfod != null) {
+                    // getUpdatedRecognitions() will return null if no new information is available since
+                    // the last time that call was made.
+                    List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
+                    if (updatedRecognitions != null) {
+                        telemetry.addData("# Object Detected", updatedRecognitions.size());
+                        // step through the list of recognitions and display boundary info.
+                        int i = 0;
+                        for (Recognition recognition : updatedRecognitions) {
+                            telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
+                            telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
+                                    recognition.getLeft(), recognition.getTop());
+                            telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
+                                    recognition.getRight(), recognition.getBottom());
+                        }
+                        telemetry.update();
+                    }
+                }
+            }
+        }
+
+        if (tfod != null) {
+            tfod.shutdown();
+        }
+    }
+
+    /**
+     * Initialize the Vuforia localization engine.
+     */
+    private void initVuforia() {
+        /*
+         * Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.
+         */
+        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
+
+        parameters.vuforiaLicenseKey = VUFORIA_KEY;
+        parameters.cameraName = hardwareMap.get(WebcamName.class, "Webcam 1");
+
+        //  Instantiate the Vuforia engine
+        vuforia = ClassFactory.getInstance().createVuforia(parameters);
+
+        // Loading trackables is not necessary for the TensorFlow Object Detection engine.
+    }
+
+    /**
+     * Initialize the TensorFlow Object Detection engine.
+     */
+    private void initTfod() {
+        int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
+                "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
+        tfodParameters.minResultConfidence = 0.8f;
+        tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
+        tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_FIRST_ELEMENT, LABEL_SECOND_ELEMENT);
+    }
+}
