@@ -68,8 +68,8 @@ public class TeleOp_Basic extends OpMode {
         if(y<0 && x==0)
             angle=3*Math.PI/2;
 
-        double velocity=Math.sqrt(Math.pow(gamepad1.left_stick_x, 2)+Math.pow(gamepad1.left_stick_y, 2));
-        double rotation=gamepad1.right_stick_x*-1;
+        double velocity=Math.sqrt(Math.pow(gamepad1.right_stick_x, 2)+Math.pow(gamepad1.left_stick_y, 2));
+        double rotation=gamepad1.left_stick_x*-1;
 
         if(inReverse)//reverse button
             angle+=Math.toRadians(180);
