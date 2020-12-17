@@ -21,27 +21,18 @@ public class Blue_Basic_Auto extends LinearOpMode {
         r.initRobot(hardwareMap, telemetry);
         r.initAutonomous();
 
-        r.side = 0; //Blue side
-
-        a.init();
-
-        r.frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //r.frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        r.setDriveMotorMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        double angle;
-
-        r.frontLeft.setTargetPosition((int) (r.angle(100, 200, 30)* r.ticksPerDeg));
-
-        r.frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
         do{
-            r.frontLeft.setPower(0.5);
-        }while(
-                r.frontLeft.getCurrentPosition() != r.frontLeft.getTargetPosition()
-        );
-
+            r.frontLeft.setPower(0.6);
+            r.frontRight.setPower(0.6);
+            r.backLeft.setPower(0.6);
+            r.backRight.setPower(0.6);
+        }while(opModeIsActive());
 
     }
 }
