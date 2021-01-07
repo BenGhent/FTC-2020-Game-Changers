@@ -147,6 +147,10 @@ public void launch(int a, int b, int c){
   - [ ] Make compatable with Teleop
   - [ ] Add reference images (the ones under the goals and outer walls)
   
+   ##Multi-Thread
+   
+   This year we have opted to go with a different approach to dealing with bugs, Multi-Threading. What Multi-Threading allows us to do is run our CV program in the background so that if and when it gets stuck on a task, it is not hindering our abinity to still move and controll the robot. We are using multi-threading mainly for our CV program.
+  
   # Overall Things
   
   ## Things to do
