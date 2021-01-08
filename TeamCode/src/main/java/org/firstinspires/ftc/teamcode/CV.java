@@ -155,4 +155,8 @@ public class CV extends Thread {
         r.telemetry.update();
     }
 
+    public boolean ping(){
+        return true;
+    }
+
 }

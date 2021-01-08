@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Hardware;
+import org.firstinspires.ftc.teamcode.CV;
 
 @TeleOp(name="TeleOp_Dev", group="Iterative Opmode")
 //@Disabled
@@ -15,11 +16,22 @@ public class TeleOp_Dev extends OpMode {
 
     Hardware r = new Hardware();
 
+    Thread CV = new CV();
+
+    public TeleOp_Dev() {
+    }
+
     @Override
     public void init() {
 
         r.initRobot(hardwareMap, telemetry);
         //r.deInitColor(hardwareMap);
+        try{
+            CV.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+            telemetry.addData("Thread CV: ", "CV faild to run");
+        }
     }
 
     @Override
@@ -106,6 +118,19 @@ public class TeleOp_Dev extends OpMode {
 
         if(gamepad2.left_bumper && gamepad2.a){//If both the angle and the firing button is pressed, fire the ring
             r.fire();
+        }
+
+        /*
+        *
+        * Thread handler
+        *
+        * */
+
+        if(CV.isAlive()){
+
+        }else{
+            CV.stop();
+            CV.start();
         }
 
     }
